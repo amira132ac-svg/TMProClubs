@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SuperLeague Season 3</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #070b17; color: #e0e6f0; font-family: 'Rajdhani', 'Arial', sans-serif; min-height: 100vh; padding: 20px; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f1a2e; }
+        ::-webkit-scrollbar-thumb { background: #1a5cff; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3b7aff; }
+
+        .container { max-width: 1400px; margin: 0 auto; background: rgba(10, 16, 30, 0.85); backdrop-filter: blur(6px); border-radius: 32px; padding: 30px 35px 45px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.05); border: 1px solid rgba(26, 92, 255, 0.15); }
+
+        .header { display: flex; align-items: center; justify-content: space-between; padding-bottom: 20px; border-bottom: 2px solid rgba(26, 92, 255, 0.25); margin-bottom: 30px; flex-wrap: wrap; gap: 15px; }
+        .logo h1 { font-family: 'Orbitron', 'Arial', sans-serif; font-weight: 900; font-size: 2.2rem; background: linear-gradient(135deg, #00d4ff, #1a5cff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 30px rgba(0, 212, 255, 0.2); letter-spacing: 2px; }
+        .logo span { font-family: 'Rajdhani', 'Arial', sans-serif; font-weight: 400; color: #7a8ba8; font-size: 0.9rem; display: block; -webkit-text-fill-color: #7a8ba8; background: none; }
+        .update-badge { background: rgba(26, 92, 255, 0.15); padding: 8px 18px; border-radius: 40px; font-size: 0.8rem; border: 1px solid rgba(26, 92, 255, 0.3); color: #8ab4ff; letter-spacing: 1px; }
+
+        .nav-tabs { display: flex; gap: 6px; background: rgba(15, 26, 46, 0.7); padding: 6px; border-radius: 50px; margin-bottom: 30px; border: 1px solid rgba(26, 92, 255, 0.2); flex-wrap: wrap; }
+        .nav-tab { padding: 12px 32px; border-radius: 40px; font-family: 'Orbitron', 'Arial', sans-serif; font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; color: #7a8ba8; background: transparent; border: none; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; }
+        .nav-tab:hover { color: #c0d0ff; background: rgba(26, 92, 255, 0.1); }
+        .nav-tab.active { background: linear-gradient(135deg, #1a5cff, #0044cc); color: #fff; box-shadow: 0 4px 25px rgba(26, 92, 255, 0.4); border: 1px solid rgba(0, 212, 255, 0.3); }
+
+        .page { display: none; animation: fadeIn 0.4s ease; }
+        .page.active { display: block; }
+        @keyframes fadeIn { 0% { opacity: 0; transform: translateY(12px); } 100% { opacity: 1; transform: translateY(0); } }
+
+        .group-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px; margin-bottom: 50px; }
+        .group-card { background: rgba(12, 22, 42, 0.8); border-radius: 20px; padding: 18px 16px 20px; border: 1px solid rgba(26, 92, 255, 0.15); backdrop-filter: blur(4px); transition: transform 0.2s; }
+        .group-card:hover { transform: translateY(-3px); border-color: rgba(26, 92, 255, 0.4); }
+        .group-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid rgba(26, 92, 255, 0.2); }
+        .group-header h3 { font-family: 'Orbitron', 'Arial', sans-serif; font-weight: 700; font-size: 1.2rem; color: #00d4ff; }
+        .group-header .update-note { font-size: 0.7rem; color: #5a7a9a; }
+
+        .standings-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        .standings-table th { text-align: left; padding: 8px 4px 6px 4px; font-weight: 600; color: #7a8ba8; text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.65rem; border-bottom: 1px solid rgba(26, 92, 255, 0.15); }
+        .standings-table td { padding: 8px 4px; border-bottom: 1px solid rgba(255, 255, 255, 0.04); color: #c8d4e8; }
+        .standings-table tr:last-child td { border-bottom: none; }
+        .standings-table .pos { width: 26px; text-align: center; font-weight: 700; color: #8ab4ff; }
+        .standings-table .team { font-weight: 600; color: #e0e6f0; }
+        .standings-table .pts { font-weight: 700; color: #00d4ff; text-align: center; }
+        .standings-table .gd { text-align: center; }
+        .standings-table .gd.positive { color: #4cdf8b; }
+        .standings-table .gd.negative { color: #ff6b6b; }
+        .standings-table .num { text-align: center; }
+
+        .stats-wrapper { display: flex; flex-direction: column; gap: 40px; margin-top: 25px; }
+        .stat-card { background: rgba(12, 22, 42, 0.85); border-radius: 20px; padding: 22px 24px 24px; border: 1px solid rgba(26, 92, 255, 0.18); width: 100%; transition: border-color 0.2s; }
+        .stat-card:hover { border-color: rgba(26, 92, 255, 0.4); }
+        .stat-card h3 { font-family: 'Orbitron', 'Arial', sans-serif; font-weight: 700; font-size: 1.25rem; color: #e0e6f0; margin-bottom: 16px; letter-spacing: 0.5px; border-bottom: 1px solid rgba(26, 92, 255, 0.2); padding-bottom: 10px; }
+        .stat-card h3 .badge { font-size: 0.7rem; background: rgba(26, 92, 255, 0.2); padding: 2px 12px; border-radius: 30px; color: #8ab4ff; margin-left: 10px; font-family: 'Rajdhani', sans-serif; font-weight: 600; }
+        .stat-list { list-style: none; padding: 0; margin: 0; }
+        .stat-list li { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.04); font-size: 0.95rem; }
+        .stat-list li:last-child { border-bottom: none; }
+        .stat-list .player { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; }
+        .stat-list .player .name { font-weight: 600; color: #e0e6f0; font-size: 1rem; }
+        .stat-list .player .club { font-size: 0.75rem; color: #7a8ba8; background: rgba(26, 92, 255, 0.08); padding: 0 12px; border-radius: 20px; line-height: 1.8; }
+        .stat-list .count { font-weight: 700; color: #00d4ff; font-size: 1.2rem; min-width: 36px; text-align: right; }
+        .stat-list .count.gold { color: #ffd700; }
+        .stat-list .rank { color: #5a7a9a; font-weight: 400; font-size: 0.8rem; min-width: 24px; }
+
+        .fixtures-grid, .results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+        .fixture-card, .result-card { background: rgba(12, 22, 42, 0.75); border-radius: 16px; padding: 16px 18px; border: 1px solid rgba(26, 92, 255, 0.15); }
+        .fixture-card .match, .result-card .match { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .fixture-card .match:last-child, .result-card .match:last-child { border-bottom: none; }
+        .fixture-card .teams, .result-card .teams { font-weight: 600; color: #e0e6f0; }
+        .fixture-card .status, .result-card .result { font-size: 0.85rem; padding: 2px 12px; border-radius: 20px; white-space: nowrap; }
+        .fixture-card .status.played { color: #4cdf8b; background: rgba(76, 223, 139, 0.15); font-weight: 700; }
+        .fixture-card .status.pending { color: #ffb347; background: rgba(255, 180, 70, 0.15); }
+        .result-card .result { color: #4cdf8b; background: rgba(76, 223, 139, 0.12); font-weight: 700; }
+        .result-card .result.draw { color: #ffd700; background: rgba(255, 215, 0, 0.12); }
+        .section-subtitle { font-size: 1rem; color: #7a8ba8; margin: 20px 0 12px 0; letter-spacing: 1px; font-weight: 600; }
+
+        @media (max-width: 700px) {
+            .container { padding: 16px; }
+            .logo h1 { font-size: 1.5rem; }
+            .nav-tab { padding: 10px 18px; font-size: 0.7rem; }
+            .group-grid { grid-template-columns: 1fr; }
+            .standings-table { font-size: 0.75rem; }
+            .header { flex-direction: column; align-items: flex-start; }
+            .stat-card { padding: 16px; }
+            .stat-list .player .club { font-size: 0.65rem; }
+            .fixtures-grid, .results-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 480px) {
+            .standings-table th, .standings-table td { padding: 6px 2px; font-size: 0.7rem; }
+            .nav-tab { padding: 8px 12px; font-size: 0.6rem; }
+            .stat-card h3 { font-size: 1rem; }
+            .stat-list li { font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <h1>⚡ SUPERLEAGUE</h1>
+                <span>Season 3 · Official Live Standings</span>
+            </div>
+            <div class="update-badge">📅 Updated: June 26, 2026</div>
+        </header>
+
+        <div class="nav-tabs" role="tablist">
+            <button class="nav-tab active" data-page="standings">🏆 Standings</button>
+            <button class="nav-tab" data-page="results">📋 Results</button>
+            <button class="nav-tab" data-page="fixtures">📅 Fixtures</button>
+        </div>
+
+        <div id="page-standings" class="page active">
+            <div class="group-grid" id="groupsContainer"></div>
+            <div class="stats-wrapper">
+                <div class="stat-card" id="topScorersContainer">
+                    <h3>⚽ Top Goal Scorers <span class="badge">Golden Boot</span></h3>
+                    <ul class="stat-list" id="scorersList"></ul>
+                </div>
+                <div class="stat-card" id="topAssistsContainer">
+                    <h3>🎯 Top Assists <span class="badge">Playmaker</span></h3>
+                    <ul class="stat-list" id="assistsList"></ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-results" class="page">
+            <h2 class="section-subtitle">📋 Played Matches</h2>
+            <div class="results-grid" id="resultsContainer"></div>
+        </div>
+
+        <div id="page-fixtures" class="page">
+            <h2 class="section-subtitle">📅 Upcoming Fixtures</h2>
+            <div class="fixtures-grid" id="fixturesContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  STANDINGS
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        var groupsData = {
+            A: { teams: [
+                { name: 'Titans', P: 3, W: 2, D: 1, L: 0, GD: 8, PTS: 7 },
+                { name: 'Royal Madrid FC', P: 2, W: 1, D: 1, L: 0, GD: 2, PTS: 4 },
+                { name: 'KakaSiah', P: 2, W: 1, D: 0, L: 1, GD: 0, PTS: 3 },
+                { name: 'Vikings', P: 1, W: 0, D: 0, L: 1, GD: -3, PTS: 0 },
+                { name: 'FC Weekend', P: 2, W: 0, D: 0, L: 2, GD: -7, PTS: 0 }
+            ]},
+            B: { teams: [
+                { name: 'ITA', P: 2, W: 2, D: 0, L: 0, GD: 10, PTS: 6 },
+                { name: 'MadridTvShow', P: 1, W: 1, D: 0, L: 0, GD: 6, PTS: 3 },
+                { name: 'DaryaSalar FC', P: 1, W: 1, D: 0, L: 0, GD: 2, PTS: 3 },
+                { name: 'Aryamehr FC', P: 2, W: 0, D: 0, L: 2, GD: -9, PTS: 0 },
+                { name: 'Richmond', P: 2, W: 0, D: 0, L: 2, GD: -9, PTS: 0 }
+            ]},
+            C: { teams: [
+                { name: 'Azabe Elahi FC', P: 3, W: 2, D: 1, L: 0, GD: 5, PTS: 7 },
+                { name: 'FaridEftekharDoost', P: 2, W: 2, D: 0, L: 0, GD: 9, PTS: 6 },
+                { name: 'Salmandan', P: 2, W: 0, D: 1, L: 1, GD: -4, PTS: 1 },
+                { name: 'Tehran Legacy', P: 1, W: 0, D: 0, L: 1, GD: -2, PTS: 0 },
+                { name: 'Verbos', P: 2, W: 0, D: 0, L: 2, GD: -8, PTS: 0 }
+            ]},
+            D: { teams: [
+                { name: 'Heirs Of Persia', P: 2, W: 1, D: 1, L: 0, GD: 9, PTS: 4 },
+                { name: 'Soroush FC', P: 1, W: 1, D: 0, L: 0, GD: 6, PTS: 3 },
+                { name: 'Galaxy F35', P: 2, W: 1, D: 0, L: 1, GD: -6, PTS: 3 },
+                { name: 'Persian Gulf', P: 1, W: 0, D: 1, L: 0, GD: 0, PTS: 1 },
+                { name: 'Dalghak UTD', P: 2, W: 0, D: 0, L: 2, GD: -9, PTS: 0 }
+            ]}
+        };
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  TOP SCORERS (به‌روزرسانی شده)
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        var topScorers = [
+            { name: 'Parsa', club: 'Azabe Elahi FC', goals: 6 },
+            { name: 'Parsa', club: 'MadridTvShow', goals: 6 }, // +2 گل جدید
+            { name: 'SoSaD', club: 'FaridEftekharDoost', goals: 5 },
+            { name: 'Amirali', club: 'ITA', goals: 4 },
+            { name: 'ANDI', club: 'Titans', goals: 3 },
+            { name: 'Marcus Rashford', club: 'Heirs Of Persia', goals: 3 },
+            { name: 'T. Mehrbod', club: 'Heirs Of Persia', goals: 3 },
+            { name: 'GORCC', club: 'DaryaSalar FC', goals: 3 },
+            { name: 'Moosazadeh', club: 'KakaSiah', goals: 3 },
+            { name: 'K. Key', club: 'ITA', goals: 3 },
+            { name: 'ZIGILINHO', club: 'Titans', goals: 2 },
+            { name: 'Hasan Saly', club: 'Titans', goals: 2 },
+            { name: 'Dante', club: 'Heirs Of Persia', goals: 2 },
+            { name: 'Armanx95', club: 'Heirs Of Persia', goals: 2 },
+            { name: 'Parsa', club: 'Soroush FC', goals: 2 },
+            { name: 'Q. Artin', club: 'Soroush FC', goals: 2 },
+            { name: 'Amirson', club: 'Royal Madrid FC', goals: 2 },
+            { name: 'Beny', club: 'MadridTvShow', goals: 2 },
+            { name: 'Armin', club: 'Salmandan', goals: 2 },
+            { name: 'Sa1rosh', club: 'MadridTvShow', goals: 1 }, // جدید
+            { name: 'Zlatan', club: 'Richmond', goals: 1 },     // جدید
+            { name: 'MohammadReza', club: 'Azabe Elahi FC', goals: 1 },
+            { name: 'Erfan', club: 'Azabe Elahi FC', goals: 1 },
+            { name: 'Amir Naghib', club: 'Galaxy F35', goals: 1 },
+            { name: 'Kiavash', club: 'Galaxy F35', goals: 1 },
+            { name: 'Salmon', club: 'Galaxy F35', goals: 1 },
+            { name: 'Onsoronia', club: 'KakaSiah', goals: 1 },
+            { name: 'JR', club: 'FC Weekend', goals: 1 },
+            { name: 'amir', club: 'Titans', goals: 1 },
+            { name: 'R. Raphinha', club: 'Titans', goals: 1 },
+            { name: 'rjb', club: 'FaridEftekharDoost', goals: 1 }
+        ];
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  TOP ASSISTS (به‌روزرسانی شده)
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        var topAssists = [
+            { name: 'Marcus Rashford', club: 'Heirs Of Persia', assists: 5 },
+            { name: 'amir', club: 'Titans', assists: 3 },
+            { name: 'Pogba', club: 'Soroush FC', assists: 3 },
+            { name: 'Neuer', club: 'Galaxy F35', assists: 2 },
+            { name: 'ZIGILINHO', club: 'Titans', assists: 2 },
+            { name: 'Parsa', club: 'Soroush FC', assists: 2 },
+            { name: 'ASAP', club: 'FaridEftekharDoost', assists: 2 },
+            { name: 'Vini', club: 'KakaSiah', assists: 2 },
+            { name: 'Beny', club: 'MadridTvShow', assists: 2 },
+            { name: 'Reverse', club: 'MadridTvShow', assists: 2 },
+            { name: 'A. AREF SP', club: 'Salmandan', assists: 2 },
+            { name: 'Amirali', club: 'ITA', assists: 2 },
+            { name: 'RezaX', club: 'ITA', assists: 2 },
+            { name: 'Bisc1t', club: 'Azabe Elahi FC', assists: 2 },
+            { name: 'Mikh', club: 'MadridTvShow', assists: 1 }, // جدید
+            { name: 'Ozil', club: 'Richmond', assists: 1 }       // جدید
+        ];
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  FIXTURES (همه بازی‌های گروه A تا D)
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        var allFixtures = [
+            { group: 'A', matches: [
+                { home: 'Royal Madrid FC', away: 'Titans' },     // انجام شده
+                { home: 'Vikings', away: 'FC Weekend' },
+                { home: 'Royal Madrid FC', away: 'Vikings' },
+                { home: 'Titans', away: 'KakaSiah' },
+                { home: 'Royal Madrid FC', away: 'FC Weekend' },
+                { home: 'Vikings', away: 'KakaSiah' }
+            ]},
+            { group: 'B', matches: [
+                { home: 'DaryaSalar FC', away: 'Aryamehr FC' },
+                { home: 'MadridTvShow', away: 'ITA' },          // انجام شده
+                { home: 'DaryaSalar FC', away: 'MadridTvShow' },
+                { home: 'Aryamehr FC', away: 'Richmond' },      // انجام شده
+                { home: 'DaryaSalar FC', away: 'ITA' },
+                { home: 'MadridTvShow', away: 'Richmond' }
+            ]},
+            { group: 'C', matches: [
+                { home: 'Verbos', away: 'Azabe Elahi FC' },     // انجام شده
+                { home: 'Tehran Legacy', away: 'Salmandan' },
+                { home: 'Verbos', away: 'Tehran Legacy' },
+                { home: 'Azabe Elahi FC', away: 'FaridEftekharDoost' },
+                { home: 'Verbos', away: 'Salmandan' },
+                { home: 'Tehran Legacy', away: 'FaridEftekharDoost' }
+            ]},
+            { group: 'D', matches: [
+                { home: 'Soroush FC', away: 'Heirs Of Persia' },
+                { home: 'Persian Gulf', away: 'Galaxy F35' },
+                { home: 'Soroush FC', away: 'Persian Gulf' },
+                { home: 'Heirs Of Persia', away: 'Dalghak UTD' },
+                { home: 'Soroush FC', away: 'Galaxy F35' },
+                { home: 'Persian Gulf', away: 'Dalghak UTD' }
+            ]}
+        ];
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  RESULTS (همه بازی‌های انجام‌شده)
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        var playedMatches = [
+            { home: 'Azabe Elahi FC', away: 'Verbos', score: '4-1' },
+            { home: 'Royal Madrid FC', away: 'Titans', score: '0-0' },
+            { home: 'MadridTvShow', away: 'ITA', score: '3-1' },      // جدید
+            { home: 'Aryamehr FC', away: 'Richmond', score: '0-1' }   // جدید
+        ];
+
+        // ─── Helper ───
+        function getMatchResult(home, away) {
+            for (var i = 0; i < playedMatches.length; i++) {
+                var m = playedMatches[i];
+                if ((m.home === home && m.away === away) || (m.home === away && m.away === home)) {
+                    if (m.home === home && m.away === away) return m.score;
+                    else {
+                        var parts = m.score.split('-');
+                        return parts[1] + '-' + parts[0];
+                    }
+                }
+            }
+            return null;
+        }
+
+        function isPlayed(home, away) {
+            return getMatchResult(home, away) !== null;
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  RENDER FUNCTIONS
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        function renderGroups() {
+            var container = document.getElementById('groupsContainer');
+            container.innerHTML = '';
+            for (var groupLetter in groupsData) {
+                if (groupsData.hasOwnProperty(groupLetter)) {
+                    var data = groupsData[groupLetter];
+                    var card = document.createElement('div');
+                    card.className = 'group-card';
+                    var header = document.createElement('div');
+                    header.className = 'group-header';
+                    header.innerHTML = '<h3>GROUP ' + groupLetter + '</h3><span class="update-note">P: ' + data.teams.length + ' teams</span>';
+                    card.appendChild(header);
+                    var table = document.createElement('table');
+                    table.className = 'standings-table';
+                    table.innerHTML = '<thead><tr><th>#</th><th>Team</th><th class="num">P</th><th class="num">W</th><th class="num">D</th><th class="num">L</th><th class="num">GD</th><th class="num">PTS</th></tr></thead><tbody id="tbody-' + groupLetter + '"></tbody>';
+                    card.appendChild(table);
+                    container.appendChild(card);
+                    var tbody = document.getElementById('tbody-' + groupLetter);
+                    var sorted = data.teams.slice().sort(function(a, b) { return (b.PTS - a.PTS) || (b.GD - a.GD); });
+                    for (var idx = 0; idx < sorted.length; idx++) {
+                        var team = sorted[idx];
+                        var tr = document.createElement('tr');
+                        var gdClass = team.GD > 0 ? 'positive' : (team.GD < 0 ? 'negative' : '');
+                        tr.innerHTML = '<td class="pos">' + (idx + 1) + '</td><td class="team">' + team.name + '</td><td class="num">' + team.P + '</td><td class="num">' + team.W + '</td><td class="num">' + team.D + '</td><td class="num">' + team.L + '</td><td class="num gd ' + gdClass + '">' + (team.GD > 0 ? '+' : '') + team.GD + '</td><td class="pts">' + team.PTS + '</td>';
+                        tbody.appendChild(tr);
+                    }
+                }
+            }
+        }
+
+        function renderTopScorers() {
+            var list = document.getElementById('scorersList');
+            list.innerHTML = '';
+            var sorted = topScorers.slice().sort(function(a, b) { return b.goals - a.goals; });
+            for (var i = 0; i < sorted.length; i++) {
+                var item = sorted[i];
+                var li = document.createElement('li');
+                var isGold = (item.goals === 6 && i === 0); // فقط نفر اول طلا بگیره
+                li.innerHTML = '<span class="player"><span class="rank">#' + (i + 1) + '</span><span class="name">' + item.name + '</span><span class="club">' + item.club + '</span></span><span class="count ' + (isGold ? 'gold' : '') + '">' + item.goals + '</span>';
+                list.appendChild(li);
+            }
+        }
+
+        function renderTopAssists() {
+            var list = document.getElementById('assistsList');
+            list.innerHTML = '';
+            var sorted = topAssists.slice().sort(function(a, b) { return b.assists - a.assists; });
+            for (var i = 0; i < sorted.length; i++) {
+                var item = sorted[i];
+                var li = document.createElement('li');
+                var isGold = (item.assists === 5 && i === 0);
+                li.innerHTML = '<span class="player"><span class="rank">#' + (i + 1) + '</span><span class="name">' + item.name + '</span><span class="club">' + item.club + '</span></span><span class="count ' + (isGold ? 'gold' : '') + '">' + item.assists + '</span>';
+                list.appendChild(li);
+            }
+        }
+
+        function renderResults() {
+            var container = document.getElementById('resultsContainer');
+            container.innerHTML = '';
+            if (playedMatches.length === 0) {
+                container.innerHTML = '<div class="fixture-card"><p style="color:#7a8ba8;">No results yet.</p></div>';
+                return;
+            }
+            for (var i = 0; i < playedMatches.length; i++) {
+                var m = playedMatches[i];
+                var card = document.createElement('div');
+                card.className = 'result-card';
+                var parts = m.score.split('-');
+                var isDraw = (parts[0] === parts[1]);
+                card.innerHTML = '<div class="match"><span class="teams">' + m.home + ' vs ' + m.away + '</span><span class="result ' + (isDraw ? 'draw' : '') + '">' + m.score + '</span></div>';
+                container.appendChild(card);
+            }
+        }
+
+        function renderFixtures() {
+            var container = document.getElementById('fixturesContainer');
+            container.innerHTML = '';
+            var hasMatch = false;
+            for (var g = 0; g < allFixtures.length; g++) {
+                var groupData = allFixtures[g];
+                var card = document.createElement('div');
+                card.className = 'fixture-card';
+                var html = '<div class="group-header" style="border-bottom:1px solid rgba(26,92,255,0.2);padding-bottom:6px;margin-bottom:8px;"><h3 style="font-family:Orbitron, Arial, sans-serif;font-size:1rem;color:#00d4ff;">GROUP ' + groupData.group + '</h3></div>';
+                var hasMatchInGroup = false;
+                for (var mIdx = 0; mIdx < groupData.matches.length; mIdx++) {
+                    var match = groupData.matches[mIdx];
+                    var result = getMatchResult(match.home, match.away);
+                    var statusHtml = '';
+                    if (result) {
+                        statusHtml = '<span class="status played">' + result + '</span>'; // سبز
+                    } else {
+                        statusHtml = '<span class="status pending">⏳ TBD</span>'; // نارنجی
+                    }
+                    html += '<div class="match"><span class="teams">' + match.home + ' vs ' + match.away + '</span>' + statusHtml + '</div>';
+                    hasMatchInGroup = true;
+                    hasMatch = true;
+                }
+                card.innerHTML = html;
+                if (hasMatchInGroup) container.appendChild(card);
+            }
+            if (!hasMatch) {
+                container.innerHTML = '<div class="fixture-card"><p style="color:#7a8ba8;">No fixtures available.</p></div>';
+            }
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  TABS
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        var tabs = document.querySelectorAll('.nav-tab');
+        var pages = {
+            standings: document.getElementById('page-standings'),
+            results: document.getElementById('page-results'),
+            fixtures: document.getElementById('page-fixtures')
+        };
+        for (var t = 0; t < tabs.length; t++) {
+            (function(tab) {
+                tab.addEventListener('click', function() {
+                    var pageId = this.dataset.page;
+                    for (var i = 0; i < tabs.length; i++) {
+                        tabs[i].classList.remove('active');
+                    }
+                    this.classList.add('active');
+                    for (var key in pages) {
+                        if (pages.hasOwnProperty(key)) {
+                            if (key === pageId) pages[key].classList.add('active');
+                            else pages[key].classList.remove('active');
+                        }
+                    }
+                });
+            })(tabs[t]);
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  INIT
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        renderGroups();
+        renderTopScorers();
+        renderTopAssists();
+        renderResults();
+        renderFixtures();
+    </script>
+</body>
+</html>
