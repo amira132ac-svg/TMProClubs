@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SUPERLEAGUE · Season 3</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
+    <style>
+        /* ─── RESET & BASE ─── */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #070b17;
+            color: #e0e6f0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            padding: 24px;
+            position: relative;
+            font-weight: 400;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background:
+                radial-gradient(ellipse at 15% 25%, rgba(26, 92, 255, 0.06), transparent 55%),
+                radial-gradient(ellipse at 85% 75%, rgba(0, 212, 255, 0.03), transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(26, 92, 255, 0.015), transparent 70%);
+            pointer-events: none;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background-image:
+                radial-gradient(1.2px 1.2px at 8% 15%, rgba(255, 255, 255, 0.05), transparent),
+                radial-gradient(1.2px 1.2px at 28% 55%, rgba(255, 255, 255, 0.03), transparent),
+                radial-gradient(1.2px 1.2px at 55% 25%, rgba(255, 255, 255, 0.04), transparent),
+                radial-gradient(1.2px 1.2px at 78% 68%, rgba(255, 255, 255, 0.025), transparent),
+                radial-gradient(1.2px 1.2px at 42% 82%, rgba(255, 255, 255, 0.035), transparent);
+            background-size: 280px 280px;
+            pointer-events: none;
+        }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: rgba(15, 26, 46, 0.2); }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #1a5cff, #0044cc); border-radius: 8px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3b7aff; }
+
+        /* ─── CONTAINER ─── */
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            background: rgba(10, 16, 30, 0.70);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: 44px;
+            padding: 28px 36px 42px;
+            border: 1px solid rgba(26, 92, 255, 0.04);
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.02);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ─── HEADER ─── */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(26, 92, 255, 0.04);
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .logo h1 {
+            font-family: 'Orbitron', 'Inter', sans-serif;
+            font-weight: 900;
+            font-size: 1.9rem;
+            background: linear-gradient(135deg, #00d4ff, #1a5cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 0.5px;
+        }
+        .logo span {
+            font-weight: 300;
+            font-size: 0.75rem;
+            color: #4a6a8a;
+            display: block;
+            letter-spacing: 5px;
+            margin-top: -2px;
+            -webkit-text-fill-color: #4a6a8a;
+        }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .channel-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #7a9abb;
+            text-decoration: none;
+            font-size: 0.78rem;
+            background: rgba(26, 92, 255, 0.04);
+            padding: 6px 16px;
+            border-radius: 40px;
+            border: 1px solid rgba(26, 92, 255, 0.04);
+            transition: all 0.3s;
+            font-weight: 400;
+        }
+        .channel-link:hover {
+            background: rgba(26, 92, 255, 0.08);
+            color: #00d4ff;
+            border-color: rgba(0, 212, 255, 0.1);
+        }
+        .update-badge {
+            background: rgba(26, 92, 255, 0.04);
+            padding: 5px 14px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            border: 1px solid rgba(26, 92, 255, 0.04);
+            color: #5a7a9a;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+        }
+
+        /* ─── NAV ─── */
+        .nav-tabs {
+            display: flex;
+            gap: 4px;
+            background: rgba(15, 26, 46, 0.2);
+            padding: 5px;
+            border-radius: 50px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(26, 92, 255, 0.03);
+            flex-wrap: wrap;
+        }
+        .nav-tab {
+            padding: 8px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.78rem;
+            color: #5a7a9a;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.3px;
+            font-family: 'Inter', sans-serif;
+        }
+        .nav-tab:hover {
+            color: #a0b8d8;
+            background: rgba(26, 92, 255, 0.04);
+        }
+        .nav-tab.active {
+            background: linear-gradient(135deg, #1a5cff, #0044cc);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(26, 92, 255, 0.15);
+            border: 1px solid rgba(0, 212, 255, 0.04);
+        }
+        .page {
+            display: none;
+            animation: fadeUp 0.45s ease;
+        }
+        .page.active { display: block; }
+        @keyframes fadeUp {
+            0% { opacity: 0; transform: translateY(16px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ─── SECTION TITLES ─── */
+        .section-title {
+            font-size: 0.85rem;
+            color: #4a6a8a;
+            letter-spacing: 4px;
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 18px;
+            text-transform: uppercase;
+        }
+        .section-divider {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(26, 92, 255, 0.05), transparent);
+            margin: 28px 0;
+        }
+
+        /* ─── BRACKET ─── */
+        .bracket-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+        }
+        @media (max-width: 900px) { .bracket-grid { grid-template-columns: 1fr; } }
+
+        .bracket-card {
+            background: rgba(12, 22, 42, 0.25);
+            border-radius: 24px;
+            padding: 20px 18px;
+            border: 1px solid rgba(26, 92, 255, 0.03);
+            backdrop-filter: blur(4px);
+            transition: border-color 0.3s, transform 0.2s;
+        }
+        .bracket-card:hover {
+            border-color: rgba(26, 92, 255, 0.06);
+            transform: translateY(-2px);
+        }
+        .bracket-card.elite { border-top: 3px solid #ffd700; }
+        .bracket-card.league-tow { border-top: 3px solid #ff4757; }
+        .bracket-title {
+            font-family: 'Orbitron', 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: 14px;
+            letter-spacing: 0.3px;
+        }
+        .bracket-title.elite { color: #ffd700; }
+        .bracket-title.league-tow { color: #ff4757; }
+        .round { margin-bottom: 16px; }
+        .round:last-child { margin-bottom: 0; }
+        .round-label {
+            font-size: 0.6rem;
+            color: #4a6a8a;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            padding-bottom: 3px;
+            font-weight: 400;
+            text-transform: uppercase;
+        }
+        .match-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 14px;
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 10px;
+            margin-bottom: 4px;
+            border-left: 2px solid rgba(26, 92, 255, 0.05);
+            font-size: 0.78rem;
+            transition: background 0.2s;
+        }
+        .match-row:hover { background: rgba(26, 92, 255, 0.03); }
+        .match-row:last-child { margin-bottom: 0; }
+        .match-row .teams {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+            color: #d0d8e8;
+            font-size: 0.72rem;
+            letter-spacing: 0.2px;
+        }
+        .match-row .vs { color: #3a5a7a; font-weight: 300; font-size: 0.55rem; }
+        .match-row .status {
+            font-size: 0.6rem;
+            color: #ffb347;
+            background: rgba(255, 180, 70, 0.04);
+            padding: 0 12px;
+            border-radius: 20px;
+            white-space: nowrap;
+            font-weight: 400;
+        }
+        .match-row .status.played { color: #4cdf8b; background: rgba(76, 223, 139, 0.04); }
+        .match-row .status.winner { color: #ffd700; background: rgba(255, 215, 0, 0.08); font-weight: 700; }
+        .semifinal-connector {
+            text-align: center;
+            color: #2a4a6a;
+            font-size: 0.6rem;
+            padding: 3px 0;
+            letter-spacing: 2px;
+        }
+        .final-connector {
+            text-align: center;
+            color: #ffd700;
+            font-size: 0.65rem;
+            padding: 5px 0;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        /* ─── GROUP STANDINGS ─── */
+        .group-standings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 22px;
+            margin-bottom: 28px;
+        }
+        .group-standings-card {
+            background: rgba(12, 22, 42, 0.2);
+            border-radius: 20px;
+            padding: 16px 16px;
+            border: 1px solid rgba(26, 92, 255, 0.03);
+            backdrop-filter: blur(4px);
+            transition: border-color 0.3s;
+        }
+        .group-standings-card:hover { border-color: rgba(26, 92, 255, 0.06); }
+        .group-standings-card h4 {
+            font-family: 'Orbitron', 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #00d4ff;
+            border-bottom: 1px solid rgba(26, 92, 255, 0.04);
+            padding-bottom: 7px;
+            margin-bottom: 8px;
+            letter-spacing: 0.3px;
+        }
+        .group-standings-card .st-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.72rem;
+        }
+        .group-standings-card .st-table th {
+            text-align: left;
+            padding: 3px 2px;
+            color: #4a6a8a;
+            font-weight: 600;
+            font-size: 0.55rem;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(26, 92, 255, 0.03);
+            letter-spacing: 0.8px;
+        }
+        .group-standings-card .st-table td {
+            padding: 3px 2px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.015);
+            color: #b8c8e0;
+        }
+        .group-standings-card .st-table .pos {
+            width: 20px;
+            text-align: center;
+            font-weight: 700;
+            color: #7a9abb;
+            font-size: 0.65rem;
+        }
+        .group-standings-card .st-table .team {
+            font-weight: 500;
+            color: #d0d8e8;
+            font-size: 0.68rem;
+        }
+        .group-standings-card .st-table .pts {
+            font-weight: 700;
+            color: #00d4ff;
+            text-align: center;
+            font-size: 0.7rem;
+        }
+        .group-standings-card .st-table .gd.positive { color: #4cdf8b; }
+        .group-standings-card .st-table .gd.negative { color: #ff6b6b; }
+        .group-standings-card .st-table .num { text-align: center; font-size: 0.65rem; }
+
+        /* ─── KNOCKOUT RESULTS ─── */
+        .knockout-results {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-width: 700px;
+            margin: 18px auto 0;
+        }
+        .ko-result {
+            background: rgba(12, 22, 42, 0.18);
+            border-radius: 14px;
+            padding: 10px 18px;
+            border: 1px solid rgba(26, 92, 255, 0.03);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: border-color 0.3s;
+        }
+        .ko-result:hover { border-color: rgba(26, 92, 255, 0.06); }
+        .ko-result .teams {
+            font-weight: 500;
+            color: #d0d8e8;
+            font-size: 0.82rem;
+        }
+        .ko-result .result {
+            font-size: 0.75rem;
+            color: #4cdf8b;
+            background: rgba(76, 223, 139, 0.04);
+            padding: 2px 14px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+        .ko-result .result.draw { color: #ffd700; background: rgba(255, 215, 0, 0.04); }
+
+        /* ─── STATS ─── */
+        .stats-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+            margin-top: 18px;
+        }
+        @media (max-width: 800px) { .stats-wrapper { grid-template-columns: 1fr; } }
+
+        .stat-card {
+            background: rgba(12, 22, 42, 0.2);
+            border-radius: 22px;
+            padding: 20px 22px 22px;
+            border: 1px solid rgba(26, 92, 255, 0.03);
+            backdrop-filter: blur(4px);
+            transition: border-color 0.3s, transform 0.2s;
+        }
+        .stat-card:hover {
+            border-color: rgba(26, 92, 255, 0.06);
+            transform: translateY(-2px);
+        }
+        .stat-card h3 {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #e0e6f0;
+            margin-bottom: 12px;
+            border-bottom: 1px solid rgba(26, 92, 255, 0.04);
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .stat-card h3 .badge {
+            font-size: 0.5rem;
+            background: rgba(26, 92, 255, 0.04);
+            padding: 2px 12px;
+            border-radius: 30px;
+            color: #7a9abb;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .stat-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .stat-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.015);
+            font-size: 0.82rem;
+        }
+        .stat-list li:last-child { border-bottom: none; }
+        .stat-list .player {
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .stat-list .player .name {
+            font-weight: 500;
+            color: #d0d8e8;
+            font-size: 0.82rem;
+        }
+        .stat-list .player .club {
+            font-size: 0.62rem;
+            color: #5a7a9a;
+            background: rgba(26, 92, 255, 0.03);
+            padding: 0 10px;
+            border-radius: 20px;
+            line-height: 1.8;
+        }
+        .stat-list .count {
+            font-weight: 700;
+            color: #00d4ff;
+            font-size: 0.95rem;
+            min-width: 28px;
+            text-align: right;
+            font-family: 'Orbitron', monospace;
+        }
+        .stat-list .count.gold { color: #ffd700; }
+        .stat-list .rank {
+            color: #2a4a6a;
+            font-weight: 300;
+            font-size: 0.65rem;
+            min-width: 20px;
+            font-family: 'Orbitron', monospace;
+        }
+
+        /* ─── FIXTURES ─── */
+        .fixtures-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 22px;
+        }
+        .fixture-card {
+            background: rgba(12, 22, 42, 0.18);
+            border-radius: 20px;
+            padding: 14px 18px;
+            border: 1px solid rgba(26, 92, 255, 0.03);
+            backdrop-filter: blur(4px);
+            transition: border-color 0.3s;
+        }
+        .fixture-card:hover { border-color: rgba(26, 92, 255, 0.06); }
+        .fixture-card .match {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.015);
+            font-size: 0.78rem;
+        }
+        .fixture-card .match:last-child { border-bottom: none; }
+        .fixture-card .teams {
+            font-weight: 500;
+            color: #d0d8e8;
+            font-size: 0.72rem;
+        }
+        .fixture-card .status {
+            font-size: 0.65rem;
+            padding: 2px 12px;
+            border-radius: 20px;
+            white-space: nowrap;
+            color: #ffb347;
+            background: rgba(255, 180, 70, 0.03);
+            font-weight: 400;
+        }
+        .fixture-card .status.played {
+            color: #4cdf8b;
+            background: rgba(76, 223, 139, 0.03);
+            font-weight: 600;
+        }
+
+        /* ─── FANTASY ─── */
+        .fantasy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 22px;
+        }
+        .fantasy-card {
+            background: rgba(12, 22, 42, 0.18);
+            border-radius: 20px;
+            padding: 18px 18px 20px;
+            border: 1px solid rgba(26, 92, 255, 0.03);
+            backdrop-filter: blur(4px);
+            transition: transform 0.2s, border-color 0.3s;
+        }
+        .fantasy-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(26, 92, 255, 0.06);
+        }
+        .fantasy-card h4 {
+            font-family: 'Orbitron', 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #00d4ff;
+            border-bottom: 1px solid rgba(26, 92, 255, 0.04);
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
+        .fantasy-card .player-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.015);
+            font-size: 0.82rem;
+        }
+        .fantasy-card .player-row:last-child { border-bottom: none; }
+        .fantasy-card .code {
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            color: #ffb347;
+            background: rgba(255, 180, 70, 0.04);
+            padding: 0 12px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            white-space: nowrap;
+            letter-spacing: 0.3px;
+        }
+        .fantasy-card .pname {
+            color: #d0d8e8;
+            font-size: 0.78rem;
+            font-weight: 400;
+            letter-spacing: 0.2px;
+        }
+
+        /* ─── SUPPORT FLOAT ─── */
+        .support-float {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: float-smooth 3.2s ease-in-out infinite;
+        }
+        @keyframes float-smooth {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+        .support-float .support-btn {
+            background: linear-gradient(135deg, #1a5cff, #0044cc);
+            border: none;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            padding: 10px 22px;
+            border-radius: 50px;
+            font-size: 0.82rem;
+            box-shadow: 0 8px 35px rgba(26, 92, 255, 0.18);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            cursor: pointer;
+        }
+        .support-float .support-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 45px rgba(26, 92, 255, 0.3);
+            background: linear-gradient(135deg, #3b7aff, #1a5cff);
+        }
+        .support-float .support-label {
+            font-size: 0.55rem;
+            color: #4a6a8a;
+            margin-top: 3px;
+            letter-spacing: 1px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 12px;
+            border-radius: 20px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            font-family: 'Orbitron', 'Inter', sans-serif;
+        }
+
+        /* ─── SPONSOR FOOTER (جای جدید پایین) ─── */
+        .sponsor-footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(26, 92, 255, 0.06);
+            display: flex;
+            justify-content: center;
+        }
+        .sponsor-footer .sponsor-box {
+            background: rgba(12, 22, 42, 0.35);
+            border: 1px solid rgba(26, 92, 255, 0.1);
+            border-radius: 20px;
+            padding: 16px 28px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            width: 100%;
+            max-width: 650px;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+            overflow: hidden;
+        }
+        .sponsor-footer .sponsor-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg at 50% 50%, rgba(26, 92, 255, 0.02), rgba(0, 212, 255, 0.02), rgba(26, 92, 255, 0.02), rgba(0, 212, 255, 0.02));
+            animation: rotate-glow 20s linear infinite;
+            pointer-events: none;
+        }
+        @keyframes rotate-glow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .sponsor-footer .sponsor-box:hover {
+            border-color: rgba(0, 212, 255, 0.25);
+            box-shadow: 0 0 50px rgba(26, 92, 255, 0.06);
+            transform: translateY(-2px);
+        }
+        .sponsor-footer .sponsor-box .sponsor-icon {
+            font-size: 2rem;
+            filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.15));
+            position: relative;
+            z-index: 1;
+        }
+        .sponsor-footer .sponsor-box .sponsor-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            position: relative;
+            z-index: 1;
+        }
+        .sponsor-footer .sponsor-box .sponsor-info .label {
+            font-size: 0.6rem;
+            color: #4a6a8a;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 300;
+        }
+        .sponsor-footer .sponsor-box .sponsor-info .name {
+            font-family: 'Orbitron', 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: #e0e6f0;
+            line-height: 1.2;
+        }
+        .sponsor-footer .sponsor-box .sponsor-info .name span {
+            color: #00d4ff;
+        }
+        .sponsor-footer .sponsor-box .sponsor-btn {
+            background: linear-gradient(135deg, #1a5cff, #0044cc);
+            border: none;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            padding: 8px 24px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            box-shadow: 0 4px 20px rgba(26, 92, 255, 0.1);
+            position: relative;
+            z-index: 1;
+            white-space: nowrap;
+        }
+        .sponsor-footer .sponsor-box .sponsor-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 35px rgba(26, 92, 255, 0.25);
+            background: linear-gradient(135deg, #3b7aff, #1a5cff);
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .container { padding: 16px; border-radius: 28px; }
+            .header { flex-direction: column; align-items: flex-start; }
+            .logo h1 { font-size: 1.6rem; }
+            .nav-tab { padding: 6px 16px; font-size: 0.7rem; }
+            .bracket-grid { grid-template-columns: 1fr; }
+            .group-standings-grid { grid-template-columns: 1fr; }
+            .stats-wrapper { grid-template-columns: 1fr; }
+            .fixtures-grid { grid-template-columns: 1fr; }
+            .fantasy-grid { grid-template-columns: 1fr; }
+            .support-float { bottom: 16px; right: 16px; }
+            .support-float .support-btn { padding: 8px 16px; font-size: 0.75rem; }
+            .sponsor-footer .sponsor-box { flex-direction: column; text-align: center; padding: 16px 20px; }
+            .sponsor-footer .sponsor-box .sponsor-info { align-items: center; }
+        }
+        @media (max-width: 480px) {
+            .nav-tabs { border-radius: 20px; gap: 3px; padding: 3px; }
+            .nav-tab { padding: 5px 10px; font-size: 0.6rem; }
+            .match-row { font-size: 0.65rem; flex-wrap: wrap; gap: 3px; padding: 4px 10px; }
+            .ko-result { flex-direction: column; gap: 3px; text-align: center; }
+            .group-standings-card .st-table { font-size: 0.6rem; }
+            .stat-list li { font-size: 0.7rem; }
+            .fantasy-card .player-row { font-size: 0.7rem; }
+            .fantasy-card .code { font-size: 0.6rem; padding: 0 8px; }
+            .fantasy-card .pname { font-size: 0.65rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- HEADER -->
+        <header class="header">
+            <div class="logo">
+                <h1>⚡ SUPERLEAGUE</h1>
+                <span>SEASON 3 · PREMIER</span>
+            </div>
+            <div class="header-actions">
+                <a href="https://t.me/TM_Proclubs" target="_blank" class="channel-link">
+                    📢 Telegram Channel
+                </a>
+                <span class="update-badge">📅 Jul 2, 2026</span>
+            </div>
+        </header>
+
+        <!-- NAV -->
+        <div class="nav-tabs" role="tablist">
+            <button class="nav-tab active" data-page="bracket">🏆 Bracket</button>
+            <button class="nav-tab" data-page="results">📋 Results</button>
+            <button class="nav-tab" data-page="fixtures">📅 Fixtures</button>
+            <button class="nav-tab" data-page="stats">📊 Stats</button>
+            <button class="nav-tab" data-page="fantasy">🎮 Fantasy</button>
+        </div>
+
+        <!-- BRACKET -->
+        <div id="page-bracket" class="page active">
+            <div class="bracket-grid" id="bracketContainer"></div>
+        </div>
+
+        <!-- RESULTS -->
+        <div id="page-results" class="page">
+            <div class="section-title">📊 Final Group Standings</div>
+            <div class="group-standings-grid" id="groupStandingsContainer"></div>
+            <hr class="section-divider" />
+            <div class="section-title">🏆 Knockout Results</div>
+            <div class="knockout-results" id="knockoutResultsContainer"></div>
+        </div>
+
+        <!-- FIXTURES -->
+        <div id="page-fixtures" class="page">
+            <div class="section-title">📅 Upcoming Fixtures — Matchday</div>
+            <div class="fixtures-grid" id="fixturesContainer"></div>
+        </div>
+
+        <!-- STATS -->
+        <div id="page-stats" class="page">
+            <div class="section-title">📊 Player Statistics</div>
+            <div class="stats-wrapper">
+                <div class="stat-card" id="topScorersContainer">
+                    <h3>⚽ Top Scorers <span class="badge">Golden Boot</span></h3>
+                    <ul class="stat-list" id="scorersList"></ul>
+                </div>
+                <div class="stat-card" id="topAssistsContainer">
+                    <h3>🎯 Top Assists <span class="badge">Playmaker</span></h3>
+                    <ul class="stat-list" id="assistsList"></ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- FANTASY -->
+        <div id="page-fantasy" class="page">
+            <div class="section-title">🎮 TM Fantasy Player Codes</div>
+            <p style="color:#4a6a8a; text-align:center; margin-bottom:16px; font-size:0.85rem;">
+                Use these codes in <strong style="color:#7a9abb;">@TMproclubbot</strong> (TM Fantasy section).
+            </p>
+            <div class="fantasy-grid" id="fantasyContainer"></div>
+        </div>
+
+        <!-- ===== SPONSOR FOOTER (جای جدید) ===== -->
+        <div class="sponsor-footer">
+            <div class="sponsor-box">
+                <span class="sponsor-icon">⚡</span>
+                <div class="sponsor-info">
+                    <span class="label">🌟 Official Sponsor</span>
+                    <span class="name">Nexa<span>DNS</span></span>
+                </div>
+                <a href="https://t.me/NexaDns" target="_blank" class="sponsor-btn">
+                    Visit Sponsor →
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SUPPORT FLOAT -->
+    <a href="https://t.me/AMiiR0023" target="_blank" class="support-float" title="Support">
+        <button class="support-btn">
+            💬 Support
+        </button>
+        <span class="support-label">@AMiiR0023</span>
+    </a>
+
+    <script>
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  UPDATED DATA
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        // ─── TOP SCORERS (Parsa Azabe Elahi → 10) ───
+        var topScorers = [
+            { name: 'ParsaMadayeni', club: 'TVSHOW', goals: 15 },
+            { name: 'Parsa', club: 'AZABEELAHI', goals: 10 },
+            { name: 'Marcus Rashford', club: 'HIERS OP', goals: 7 },
+            { name: 'Parsa', club: 'SOROUSH', goals: 7 },
+            { name: 'HosseinArya', club: 'VIKINGS', goals: 6 },
+            { name: 'Ap', club: 'PERSIANGULF', goals: 6 },
+            { name: 'SoSaD', club: 'FARID E.', goals: 6 },
+            { name: 'Armanx95', club: 'HIERS OP', goals: 6 },
+            { name: 'Beny', club: 'TVSHOW', goals: 6 },
+            { name: 'Sami', club: 'HIERS OP', goals: 5 }
+        ];
+
+        // ─── TOP ASSISTS ───
+        var topAssists = [
+            { name: 'Marcus Rashford', club: 'HIERS OP', assists: 8 },
+            { name: 'Parsa', club: 'SOROUSH', assists: 6 },
+            { name: 'F MCH', club: 'VIKINGS', assists: 5 },
+            { name: 'Hamed', club: 'VIKINGS', assists: 5 },
+            { name: 'Parham', club: 'HIERS OP', assists: 5 },
+            { name: 'ParsaMadayeni', club: 'TVSHOW', assists: 5 },
+            { name: 'Ap', club: 'PERSIANGULF', assists: 4 },
+            { name: 'Q. Artin', club: 'SOROUSH', assists: 4 },
+            { name: 'Kos dast', club: 'PERSIANGULF', assists: 4 },
+            { name: 'Pogba', club: 'SOROUSH', assists: 4 },
+            { name: 'Beny', club: 'TVSHOW', assists: 3 }
+        ];
+
+        // ─── BRACKET ───
+        var bracketData = {
+            ELITE: {
+                label: 'ELITE',
+                color: '#ffd700',
+                quarterfinals: [
+                    { home: 'MadridTvShow', away: 'Azabe Elahi FC', result: 'MadridTvShow', note: '✅' },
+                    { home: 'Titans', away: 'DaryaSalar', result: null },
+                    { home: 'HiersOfPersia', away: 'PersianGulf', result: null },
+                    { home: 'FaridEftekharDoost', away: 'Vikings', result: null }
+                ],
+                semifinals: [
+                    { home: 'MadridTvShow', away: 'Winner QF2', result: null },
+                    { home: 'Winner QF3', away: 'Winner QF4', result: null }
+                ],
+                final: [
+                    { home: 'Winner SF1', away: 'Winner SF2', result: null }
+                ]
+            },
+            'LEAGUE TOW': {
+                label: 'LEAGUE TOW',
+                color: '#ff4757',
+                quarterfinals: [
+                    { home: 'ITA', away: 'Richmond', result: 'ITA', note: '✅' },
+                    { home: 'Soroush FC', away: 'Galaxy F35', result: 'Soroush FC', note: '✅' },
+                    { home: 'RoyalMadrid', away: 'KakaSiah', result: 'RoyalMadrid', note: '✅' },
+                    { home: 'Salmandan', away: 'Tehran Legacy', result: null }
+                ],
+                semifinals: [
+                    { home: 'ITA', away: 'Soroush FC', result: null },
+                    { home: 'RoyalMadrid', away: 'Winner QF4', result: null }
+                ],
+                final: [
+                    { home: 'Winner SF1', away: 'Winner SF2', result: null }
+                ]
+            }
+        };
+
+        // ─── KNOCKOUT RESULTS ───
+        var knockoutMatches = [];
+
+        // ─── GROUP STANDINGS ───
+        var finalStandings = {
+            A: [
+                { name: 'Titans', P: 4, W: 3, D: 1, L: 0, GD: 9, PTS: 10 },
+                { name: 'Vikings', P: 4, W: 3, D: 0, L: 1, GD: 7, PTS: 9 },
+                { name: 'Royal Madrid FC', P: 4, W: 2, D: 1, L: 1, GD: 3, PTS: 7 },
+                { name: 'KakaSiah', P: 4, W: 1, D: 0, L: 3, GD: -7, PTS: 3 },
+                { name: 'FC Weekend', P: 4, W: 0, D: 0, L: 4, GD: -12, PTS: 0 }
+            ],
+            B: [
+                { name: 'MadridTvShow', P: 4, W: 4, D: 0, L: 0, GD: 19, PTS: 12 },
+                { name: 'DaryaSalar FC', P: 4, W: 3, D: 0, L: 1, GD: 2, PTS: 9 },
+                { name: 'ITA', P: 4, W: 2, D: 0, L: 2, GD: 6, PTS: 6 },
+                { name: 'Richmond', P: 4, W: 1, D: 0, L: 3, GD: -14, PTS: 3 },
+                { name: 'Aryamehr FC', P: 4, W: 0, D: 0, L: 4, GD: -13, PTS: 0 }
+            ],
+            C: [
+                { name: 'FaridEftekharDoost', P: 4, W: 3, D: 1, L: 0, GD: 14, PTS: 10 },
+                { name: 'Azabe Elahi FC', P: 4, W: 2, D: 2, L: 0, GD: 5, PTS: 8 },
+                { name: 'Salmandan', P: 4, W: 1, D: 2, L: 1, GD: -3, PTS: 5 },
+                { name: 'Tehran Legacy', P: 4, W: 1, D: 0, L: 3, GD: -6, PTS: 3 },
+                { name: 'Verbos', P: 4, W: 0, D: 1, L: 3, GD: -10, PTS: 1 }
+            ],
+            D: [
+                { name: 'Heirs Of Persia', P: 4, W: 3, D: 1, L: 0, GD: 20, PTS: 10 },
+                { name: 'Persian Gulf', P: 4, W: 2, D: 2, L: 0, GD: 16, PTS: 8 },
+                { name: 'Soroush FC', P: 4, W: 2, D: 1, L: 1, GD: 13, PTS: 7 },
+                { name: 'Galaxy F35', P: 4, W: 1, D: 0, L: 3, GD: -20, PTS: 3 },
+                { name: 'Dalghak UTD', P: 4, W: 0, D: 0, L: 4, GD: -29, PTS: 0 }
+            ]
+        };
+
+        // ─── FIXTURES ───
+        var fixturesByDay = [
+            {
+                day: '🏆 ELITE — Matchday',
+                matches: [
+                    { home: 'Titans', away: 'DaryaSalar', time: '11:59' },
+                    { home: 'HiersOfPersia', away: 'PersianGulf', time: '11:30' },
+                    { home: 'FaridEftekharDoost', away: 'Vikings', time: '12:00' }
+                ]
+            },
+            {
+                day: '🏅 LEAGUE TWO — Matchday',
+                matches: [
+                    { home: 'Salmandan', away: 'Tehran Legacy', time: '11:00' }
+                ]
+            }
+        ];
+
+        // ─── FANTASY DATA ───
+        var fantasyData = [
+            { team: 'AZABEELAHI', players: [
+                    { code: 'G01', name: 'ARVIN BZF' },
+                    { code: 'MD 01', name: 'Mobin' },
+                    { code: 'MD 02', name: 'Bisc1t' },
+                    { code: 'A 01', name: 'ParsaXbio' },
+                    { code: 'A 02', name: 'AlirezaDr' }
+                ] },
+            { team: 'TVSHOW', players: [
+                    { code: 'G02', name: 'DEXTER' },
+                    { code: 'MD 03', name: 'MIKH' },
+                    { code: 'MD 04', name: 'Reverse' },
+                    { code: 'A 03', name: 'ParsaMadayeni' },
+                    { code: 'A 04', name: 'Sa1rosh' }
+                ] },
+            { team: 'TITANS', players: [
+                    { code: 'G03', name: 'Arman' },
+                    { code: 'MD 05', name: 'Farzad' },
+                    { code: 'MD 06', name: 'S. HARDANI' },
+                    { code: 'A 05', name: 'ZIGILINHO' },
+                    { code: 'A 06', name: 'ANDI' }
+                ] },
+            { team: 'DARYASALAR', players: [
+                    { code: 'G04', name: 'Aboli' },
+                    { code: 'MD 07', name: 'Abol' },
+                    { code: 'MD 08', name: 'Zanboori' },
+                    { code: 'A 07', name: 'GORCC' },
+                    { code: 'A 08', name: 'ArvinMc' }
+                ] },
+            { team: 'FARID E.', players: [
+                    { code: 'G05', name: 'FAR' },
+                    { code: 'MD 09', name: 'Heidari' },
+                    { code: 'MD 10', name: 'Rjb' },
+                    { code: 'A 09', name: 'SOSAD' },
+                    { code: 'A 10', name: 'ASAP' }
+                ] },
+            { team: 'VIKINGS', players: [
+                    { code: 'G06', name: 'A. BZF' },
+                    { code: 'MD 11', name: 'Hamm' },
+                    { code: 'MD 12', name: 'M FCH' },
+                    { code: 'A 11', name: 'HossienArya' },
+                    { code: 'A 12', name: 'Milad' }
+                ] },
+            { team: 'PERSIANGULF', players: [
+                    { code: 'G07', name: 'Sadeghi' },
+                    { code: 'MD 13', name: 'KosDast' },
+                    { code: 'MD 14', name: 'Ramtin' },
+                    { code: 'A 13', name: 'C. RONALDO' },
+                    { code: 'A 14', name: 'AP' }
+                ] },
+            { team: 'HIERS OP', players: [
+                    { code: 'G08', name: 'Neuer' },
+                    { code: 'MD 15', name: 'XxShojaxX' },
+                    { code: 'MD 16', name: 'm. asli' },
+                    { code: 'A 15', name: 'Marcus Rashford' },
+                    { code: 'A 16', name: 'Sami' }
+                ] }
+        ];
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  HELPERS & RENDER
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        function getKnockoutResult(home, away) {
+            for (var i = 0; i < knockoutMatches.length; i++) {
+                var m = knockoutMatches[i];
+                if ((m.home === home && m.away === away) || (m.home === away && m.away === home)) {
+                    if (m.home === home && m.away === away) return m.score;
+                    else {
+                        var parts = m.score.split('-');
+                        return parts[1] + '-' + parts[0];
+                    }
+                }
+            }
+            return null;
+        }
+
+        function renderBracket() {
+            var container = document.getElementById('bracketContainer');
+            container.innerHTML = '';
+            for (var league in bracketData) {
+                if (bracketData.hasOwnProperty(league)) {
+                    var data = bracketData[league];
+                    var card = document.createElement('div');
+                    card.className = 'bracket-card ' + (league === 'ELITE' ? 'elite' : 'league-tow');
+
+                    var title = document.createElement('div');
+                    title.className = 'bracket-title ' + (league === 'ELITE' ? 'elite' : 'league-tow');
+                    title.textContent = league;
+                    card.appendChild(title);
+
+                    var rounds = [
+                        { key: 'quarterfinals', label: '⚔️ Quarterfinals' },
+                        { key: 'semifinals', label: '🏆 Semifinals' },
+                        { key: 'final', label: '👑 Final' }
+                    ];
+
+                    for (var r = 0; r < rounds.length; r++) {
+                        var roundKey = rounds[r].key;
+                        var roundLabel = rounds[r].label;
+                        var matches = data[roundKey];
+                        if (!matches) continue;
+
+                        var div = document.createElement('div');
+                        div.className = 'round';
+                        var label = document.createElement('div');
+                        label.className = 'round-label';
+                        label.textContent = roundLabel;
+                        div.appendChild(label);
+
+                        for (var i = 0; i < matches.length; i++) {
+                            var m = matches[i];
+                            var row = document.createElement('div');
+                            row.className = 'match-row';
+
+                            var homeName = m.home;
+                            var awayName = m.away;
+
+                            if (m.result) {
+                                if (m.result === m.home) {
+                                    homeName = m.home + ' ✅';
+                                } else if (m.result === m.away) {
+                                    awayName = m.away + ' ✅';
+                                }
+                            }
+
+                            var statusHtml = '';
+                            if (m.note) {
+                                statusHtml = '<span class="status winner">' + m.note + ' Advanced</span>';
+                            } else {
+                                var result = getKnockoutResult(m.home, m.away);
+                                statusHtml = result ? '<span class="status played">' + result + '</span>' :
+                                    '<span class="status">⏳ TBD</span>';
+                            }
+
+                            row.innerHTML = '<span class="teams"><span>' + homeName + '</span> <span class="vs">vs</span> <span>' + awayName + '</span></span>' + statusHtml;
+                            div.appendChild(row);
+                        }
+
+                        card.appendChild(div);
+
+                        if (roundKey === 'quarterfinals' && data.semifinals) {
+                            var connector = document.createElement('div');
+                            connector.className = 'semifinal-connector';
+                            connector.textContent = '⬇ ⬇ ⬇';
+                            card.appendChild(connector);
+                        }
+                        if (roundKey === 'semifinals' && data.final) {
+                            var connector2 = document.createElement('div');
+                            connector2.className = 'final-connector';
+                            connector2.textContent = '🏆 FINAL 🏆';
+                            card.appendChild(connector2);
+                        }
+                    }
+
+                    container.appendChild(card);
+                }
+            }
+        }
+
+        function renderGroupStandings() {
+            var container = document.getElementById('groupStandingsContainer');
+            container.innerHTML = '';
+            for (var group in finalStandings) {
+                if (finalStandings.hasOwnProperty(group)) {
+                    var data = finalStandings[group];
+                    var card = document.createElement('div');
+                    card.className = 'group-standings-card';
+                    var html = '<h4>GROUP ' + group + '</h4>';
+                    html += '<table class="st-table"><thead><tr><th>#</th><th>Team</th><th class="num">P</th><th class="num">W</th><th class="num">D</th><th class="num">L</th><th class="num">GD</th><th class="num">PTS</th></tr></thead><tbody>';
+                    for (var i = 0; i < data.length; i++) {
+                        var t = data[i];
+                        var gdClass = t.GD > 0 ? 'positive' : (t.GD < 0 ? 'negative' : '');
+                        html += '<tr><td class="pos">' + (i + 1) + '</td><td class="team">' + t.name + '</td><td class="num">' + t.P + '</td><td class="num">' + t.W + '</td><td class="num">' + t.D + '</td><td class="num">' + t.L + '</td><td class="num gd ' + gdClass + '">' + (t.GD > 0 ? '+' : '') + t.GD + '</td><td class="pts">' + t.PTS + '</td></tr>';
+                    }
+                    html += '</tbody></table>';
+                    card.innerHTML = html;
+                    container.appendChild(card);
+                }
+            }
+        }
+
+        function renderKnockoutResults() {
+            var container = document.getElementById('knockoutResultsContainer');
+            container.innerHTML = '';
+            if (knockoutMatches.length === 0) {
+                container.innerHTML = '<div class="ko-result" style="justify-content:center; color:#4a6a8a;">No knockout results yet.</div>';
+                return;
+            }
+            var reversed = knockoutMatches.slice().reverse();
+            for (var i = 0; i < reversed.length; i++) {
+                var m = reversed[i];
+                var card = document.createElement('div');
+                card.className = 'ko-result';
+                var parts = m.score.split('-');
+                var isDraw = (parts[0] === parts[1]);
+                card.innerHTML = '<span class="teams">' + m.home + ' vs ' + m.away + '</span><span class="result ' + (isDraw ? 'draw' : '') + '">' + m.score + '</span>';
+                container.appendChild(card);
+            }
+        }
+
+        function renderTopScorers() {
+            var list = document.getElementById('scorersList');
+            list.innerHTML = '';
+            var sorted = topScorers.slice().sort(function(a, b) { return b.goals - a.goals; });
+            for (var i = 0; i < sorted.length && i < 15; i++) {
+                var item = sorted[i];
+                var li = document.createElement('li');
+                var isGold = (i === 0);
+                li.innerHTML = '<span class="player"><span class="rank">#' + (i + 1) + '</span><span class="name">' + item.name + '</span><span class="club">' + item.club + '</span></span><span class="count ' + (isGold ? 'gold' : '') + '">' + item.goals + '</span>';
+                list.appendChild(li);
+            }
+        }
+
+        function renderTopAssists() {
+            var list = document.getElementById('assistsList');
+            list.innerHTML = '';
+            var sorted = topAssists.slice().sort(function(a, b) { return b.assists - a.assists; });
+            for (var i = 0; i < sorted.length && i < 15; i++) {
+                var item = sorted[i];
+                var li = document.createElement('li');
+                var isGold = (i === 0);
+                li.innerHTML = '<span class="player"><span class="rank">#' + (i + 1) + '</span><span class="name">' + item.name + '</span><span class="club">' + item.club + '</span></span><span class="count ' + (isGold ? 'gold' : '') + '">' + item.assists + '</span>';
+                list.appendChild(li);
+            }
+        }
+
+        function renderFixtures() {
+            var container = document.getElementById('fixturesContainer');
+            container.innerHTML = '';
+            var hasMatch = false;
+            for (var d = 0; d < fixturesByDay.length; d++) {
+                var dayData = fixturesByDay[d];
+                var matches = dayData.matches;
+                var card = document.createElement('div');
+                card.className = 'fixture-card';
+                var html = '<div style="border-bottom:1px solid rgba(26,92,255,0.04);padding-bottom:5px;margin-bottom:7px;"><h3 style="font-weight:700;font-size:0.85rem;color:#00d4ff;">📅 ' + dayData.day + '</h3></div>';
+                var hasMatchInGroup = false;
+                for (var mIdx = 0; mIdx < matches.length; mIdx++) {
+                    var match = matches[mIdx];
+                    var result = getKnockoutResult(match.home, match.away);
+                    var statusHtml = result ? '<span class="status played">' + result + '</span>' : '<span class="status">' + match.time + '</span>';
+                    html += '<div class="match"><span class="teams">' + match.home + ' vs ' + match.away + '</span>' + statusHtml + '</div>';
+                    hasMatchInGroup = true;
+                    hasMatch = true;
+                }
+                card.innerHTML = html;
+                if (hasMatchInGroup) container.appendChild(card);
+            }
+            if (!hasMatch) {
+                container.innerHTML = '<div class="fixture-card" style="text-align:center; color:#4a6a8a;">No fixtures available.</div>';
+            }
+        }
+
+        function renderFantasy() {
+            var container = document.getElementById('fantasyContainer');
+            container.innerHTML = '';
+            for (var i = 0; i < fantasyData.length; i++) {
+                var team = fantasyData[i];
+                var card = document.createElement('div');
+                card.className = 'fantasy-card';
+                var title = document.createElement('h4');
+                title.textContent = team.team;
+                card.appendChild(title);
+                for (var j = 0; j < team.players.length; j++) {
+                    var p = team.players[j];
+                    var row = document.createElement('div');
+                    row.className = 'player-row';
+                    var nameSpan = document.createElement('span');
+                    nameSpan.className = 'pname';
+                    nameSpan.textContent = p.name;
+                    var codeSpan = document.createElement('span');
+                    codeSpan.className = 'code';
+                    codeSpan.textContent = p.code;
+                    row.appendChild(nameSpan);
+                    row.appendChild(codeSpan);
+                    card.appendChild(row);
+                }
+                container.appendChild(card);
+            }
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  TABS
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        var tabs = document.querySelectorAll('.nav-tab');
+        var pages = {
+            bracket: document.getElementById('page-bracket'),
+            results: document.getElementById('page-results'),
+            fixtures: document.getElementById('page-fixtures'),
+            stats: document.getElementById('page-stats'),
+            fantasy: document.getElementById('page-fantasy')
+        };
+
+        for (var t = 0; t < tabs.length; t++) {
+            (function(tab) {
+                tab.addEventListener('click', function() {
+                    var pageId = this.dataset.page;
+                    for (var i = 0; i < tabs.length; i++) {
+                        tabs[i].classList.remove('active');
+                    }
+                    this.classList.add('active');
+                    for (var key in pages) {
+                        if (pages.hasOwnProperty(key)) {
+                            if (key === pageId) pages[key].classList.add('active');
+                            else pages[key].classList.remove('active');
+                        }
+                    }
+                });
+            })(tabs[t]);
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  INIT
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        renderBracket();
+        renderGroupStandings();
+        renderKnockoutResults();
+        renderTopScorers();
+        renderTopAssists();
+        renderFixtures();
+        renderFantasy();
+    </script>
+
+</body>
+</html>
