@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>در حال ارتقا · SUPERLEAGUE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #070b17;
+            color: #e0e6f0;
+            font-family: 'Vazirmatn', 'Arial', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ===== AMBIENT GLOW ===== */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background:
+                radial-gradient(ellipse at 20% 30%, rgba(26, 92, 255, 0.08), transparent 55%),
+                radial-gradient(ellipse at 80% 70%, rgba(0, 212, 255, 0.04), transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(26, 92, 255, 0.02), transparent 70%);
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background-image:
+                radial-gradient(1.5px 1.5px at 12% 18%, rgba(255, 255, 255, 0.05), transparent),
+                radial-gradient(1.5px 1.5px at 32% 58%, rgba(255, 255, 255, 0.03), transparent),
+                radial-gradient(1.5px 1.5px at 58% 28%, rgba(255, 255, 255, 0.04), transparent),
+                radial-gradient(1.5px 1.5px at 82% 72%, rgba(255, 255, 255, 0.025), transparent),
+                radial-gradient(1.5px 1.5px at 45% 88%, rgba(255, 255, 255, 0.035), transparent);
+            background-size: 280px 280px;
+            pointer-events: none;
+        }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            max-width: 820px;
+            width: 100%;
+            background: rgba(10, 16, 30, 0.72);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: 48px;
+            padding: 40px 44px 44px;
+            border: 1px solid rgba(26, 92, 255, 0.05);
+            box-shadow: 0 50px 120px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.02);
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        /* ===== LOGO ===== */
+        .logo {
+            margin-bottom: 8px;
+        }
+
+        .logo h1 {
+            font-family: 'Orbitron', 'Vazirmatn', sans-serif;
+            font-weight: 900;
+            font-size: 2.2rem;
+            background: linear-gradient(135deg, #00d4ff, #1a5cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            font-weight: 300;
+            font-size: 0.75rem;
+            color: #4a6a8a;
+            display: block;
+            letter-spacing: 5px;
+            margin-top: -2px;
+            -webkit-text-fill-color: #4a6a8a;
+        }
+
+        /* ===== ICON & TITLE ===== */
+        .hero-icon {
+            font-size: 4.8rem;
+            display: block;
+            margin: 16px 0 6px;
+            animation: float-rocket 3.5s ease-in-out infinite;
+            filter: drop-shadow(0 0 40px rgba(0, 212, 255, 0.15));
+        }
+
+        @keyframes float-rocket {
+            0%,
+            100% {
+                transform: translateY(0) rotate(-3deg);
+            }
+            50% {
+                transform: translateY(-14px) rotate(3deg);
+            }
+        }
+
+        .main-title {
+            font-weight: 800;
+            font-size: 2.2rem;
+            margin: 6px 0 4px;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #ffffff, #8ab4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sub-text {
+            font-size: 1.05rem;
+            color: #8ab4ff;
+            font-weight: 400;
+            max-width: 480px;
+            margin: 0 auto 6px;
+            line-height: 1.8;
+        }
+
+        .sub-text small {
+            display: block;
+            font-size: 0.9rem;
+            color: #5a7a9a;
+            margin-top: 4px;
+            font-weight: 300;
+        }
+
+        /* ===== TIMER ===== */
+        .timer-section {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 28px;
+            padding: 24px 20px 20px;
+            border: 1px solid rgba(26, 92, 255, 0.04);
+            margin: 28px 0 24px;
+        }
+
+        .timer-label {
+            font-size: 0.7rem;
+            color: #4a6a8a;
+            letter-spacing: 3px;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .timer-box {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            direction: ltr;
+            flex-wrap: wrap;
+        }
+
+        .timer-item {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            padding: 10px 20px;
+            min-width: 70px;
+            border: 1px solid rgba(0, 212, 255, 0.04);
+        }
+
+        .timer-item .num {
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            font-size: 2.4rem;
+            color: #00d4ff;
+            display: block;
+            line-height: 1.1;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.08);
+        }
+
+        .timer-item .label {
+            font-size: 0.6rem;
+            color: #4a6a8a;
+            letter-spacing: 2px;
+            display: block;
+            margin-top: 2px;
+            font-weight: 300;
+        }
+
+        .timer-finished {
+            display: none;
+            font-weight: 700;
+            font-size: 1.6rem;
+            color: #4cdf8b;
+        }
+
+        .timer-finished .check {
+            display: inline-block;
+            animation: pop-check 0.6s ease;
+        }
+
+        @keyframes pop-check {
+            0% {
+                transform: scale(0);
+            }
+            60% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* ===== FEATURES ===== */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 14px;
+            margin: 24px 0 28px;
+        }
+
+        .feature-card {
+            background: rgba(0, 0, 0, 0.12);
+            border-radius: 18px;
+            padding: 16px 10px;
+            border: 1px solid rgba(26, 92, 255, 0.03);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(26, 92, 255, 0.08);
+            background: rgba(26, 92, 255, 0.03);
+            transform: translateY(-3px);
+        }
+
+        .feature-card .emoji {
+            font-size: 1.8rem;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .feature-card .title {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #d0d8e8;
+        }
+
+        .feature-card .desc {
+            font-size: 0.7rem;
+            color: #5a7a9a;
+            margin-top: 2px;
+            font-weight: 300;
+        }
+
+        /* ===== SUPPORT ===== */
+        .support-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+
+        .support-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #7a9abb;
+            text-decoration: none;
+            font-size: 0.8rem;
+            background: rgba(26, 92, 255, 0.03);
+            padding: 6px 18px;
+            border-radius: 40px;
+            border: 1px solid rgba(26, 92, 255, 0.03);
+            transition: all 0.3s ease;
+            font-weight: 400;
+        }
+
+        .support-link:hover {
+            background: rgba(26, 92, 255, 0.06);
+            color: #00d4ff;
+            border-color: rgba(0, 212, 255, 0.08);
+        }
+
+        .btn-reload {
+            background: linear-gradient(135deg, #1a5cff, #0044cc);
+            border: none;
+            color: #fff;
+            font-family: 'Vazirmatn', sans-serif;
+            font-weight: 600;
+            padding: 8px 28px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(26, 92, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            letter-spacing: 0.3px;
+        }
+
+        .btn-reload:hover {
+            transform: scale(1.04);
+            box-shadow: 0 8px 35px rgba(26, 92, 255, 0.25);
+            background: linear-gradient(135deg, #3b7aff, #1a5cff);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer-note {
+            text-align: center;
+            font-size: 0.65rem;
+            color: #2a4a6a;
+            margin-top: 28px;
+            letter-spacing: 1px;
+            border-top: 1px solid rgba(26, 92, 255, 0.03);
+            padding-top: 18px;
+            font-weight: 300;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 640px) {
+            .container {
+                padding: 28px 20px 32px;
+                border-radius: 32px;
+            }
+            .logo h1 {
+                font-size: 1.8rem;
+            }
+            .main-title {
+                font-size: 1.7rem;
+            }
+            .hero-icon {
+                font-size: 3.8rem;
+            }
+            .timer-item {
+                padding: 8px 14px;
+                min-width: 56px;
+            }
+            .timer-item .num {
+                font-size: 1.8rem;
+            }
+            .features-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .timer-box {
+                gap: 10px;
+            }
+            .timer-item {
+                min-width: 48px;
+                padding: 6px 10px;
+            }
+            .timer-item .num {
+                font-size: 1.4rem;
+            }
+            .support-row {
+                gap: 8px;
+            }
+            .support-link {
+                font-size: 0.7rem;
+                padding: 4px 12px;
+            }
+            .btn-reload {
+                font-size: 0.7rem;
+                padding: 6px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- LOGO -->
+        <div class="logo">
+            <h1>⚡ SUPERLEAGUE</h1>
+            <span>فصل سوم · لیگ برتر</span>
+        </div>
+
+        <!-- ICON + TITLE -->
+        <span class="hero-icon">🚀</span>
+        <div class="main-title">در حال ارتقا به نسخه جدید</div>
+        <div class="sub-text">
+            تیم فنی با تمام توان در حال بهبود و مدرن‌سازی پلتفرم است.
+            <small>امکانات جدید، سرعت بیشتر، امنیت بالاتر و طراحی فوق‌العاده</small>
+        </div>
+
+        <!-- TIMER 24 HOURS -->
+        <div class="timer-section">
+            <div class="timer-label">⏳ زمان تخمینی باقی‌مانده</div>
+            <div class="timer-box" id="timerDisplay">
+                <div class="timer-item">
+                    <span class="num" id="hours">24</span>
+                    <span class="label">ساعت</span>
+                </div>
+                <div class="timer-item">
+                    <span class="num" id="minutes">00</span>
+                    <span class="label">دقیقه</span>
+                </div>
+                <div class="timer-item">
+                    <span class="num" id="seconds">00</span>
+                    <span class="label">ثانیه</span>
+                </div>
+            </div>
+            <div class="timer-finished" id="timerFinished">
+                <span class="check">✅</span> آماده‌ی بازگشایی!
+            </div>
+        </div>
+
+        <!-- FEATURES -->
+        <div class="features-grid">
+            <div class="feature-card">
+                <span class="emoji">⚡</span>
+                <div class="title">سرعت بالا</div>
+                <div class="desc">بهینه‌سازی کامل</div>
+            </div>
+            <div class="feature-card">
+                <span class="emoji">🛡️</span>
+                <div class="title">امنیت پیشرفته</div>
+                <div class="desc">محافظت مدرن</div>
+            </div>
+            <div class="feature-card">
+                <span class="emoji">🎮</span>
+                <div class="title">فانتزی</div>
+                <div class="desc">ساخت تیم آنلاین</div>
+            </div>
+            <div class="feature-card">
+                <span class="emoji">📊</span>
+                <div class="title">آمار زنده</div>
+                <div class="desc">داده‌های لحظه‌ای</div>
+            </div>
+        </div>
+
+        <!-- SUPPORT -->
+        <div class="support-row">
+            <a href="https://t.me/TM_Proclubs" target="_blank" class="support-link">
+                📢 کانال تلگرام
+            </a>
+            <a href="https://t.me/AMiiR0023" target="_blank" class="support-link">
+                💬 پشتیبانی
+            </a>
+            <button class="btn-reload" onclick="location.reload();">
+                🔄 بررسی مجدد
+            </button>
+        </div>
+
+        <div class="footer-note">
+            SUPERLEAGUE · تمامی حقوق محفوظ است
+        </div>
+
+    </div>
+
+    <script>
+        // ================================================
+        //  تایمر ۲۴ ساعته (بدون ریست)
+        // ================================================
+
+        let totalSeconds = 24 * 60 * 60; // ۲۴ ساعت = ۸۶۴۰۰ ثانیه
+
+        const hoursEl = document.getElementById('hours');
+        const minutesEl = document.getElementById('minutes');
+        const secondsEl = document.getElementById('seconds');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const timerFinished = document.getElementById('timerFinished');
+
+        function updateTimer() {
+            if (totalSeconds <= 0) {
+                timerDisplay.style.display = 'none';
+                timerFinished.style.display = 'block';
+                return;
+            }
+
+            const hrs = Math.floor(totalSeconds / 3600);
+            const mins = Math.floor((totalSeconds % 3600) / 60);
+            const secs = totalSeconds % 60;
+
+            hoursEl.textContent = String(hrs).padStart(2, '0');
+            minutesEl.textContent = String(mins).padStart(2, '0');
+            secondsEl.textContent = String(secs).padStart(2, '0');
+
+            totalSeconds--;
+        }
+
+        updateTimer();
+        const interval = setInterval(updateTimer, 1000);
+
+        window.addEventListener('beforeunload', function() {
+            clearInterval(interval);
+        });
+    </script>
+
+</body>
+</html>
