@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+  <title>SUPERLEAGUE · Season 3</title>
+  <link rel="manifest" href="data:application/json,{}" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{background:#080e1a;color:#e8edf5;font-family:'Inter',sans-serif;min-height:100vh;padding:16px;position:relative;font-weight:400;line-height:1.5;-webkit-font-smoothing:antialiased}
+    body::before{content:'';position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at 20% 30%,rgba(0,100,255,0.06),transparent 50%),radial-gradient(ellipse at 80% 70%,rgba(255,215,0,0.025),transparent 50%);pointer-events:none}
+    ::-webkit-scrollbar{width:4px}
+    ::-webkit-scrollbar-track{background:rgba(255,255,255,0.02)}
+    ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#1a5cff,#ffd700);border-radius:20px}
+    .container{max-width:1440px;margin:0 auto;background:rgba(8,14,26,0.7);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-radius:40px;padding:24px 28px 32px;border:1px solid rgba(255,215,0,0.04);box-shadow:0 40px 100px rgba(0,0,0,0.5);position:relative;z-index:1}
+    .header{display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;border-bottom:1px solid rgba(255,215,0,0.04);margin-bottom:20px;flex-wrap:wrap;gap:10px}
+    .logo h1{font-family:'Orbitron',sans-serif;font-weight:900;font-size:2rem;background:linear-gradient(135deg,#1a5cff,#00d4ff,#ffd700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:0.3px}
+    .logo span{font-weight:300;font-size:.7rem;color:#5a7a9a;display:block;letter-spacing:4px;margin-top:-2px;-webkit-text-fill-color:#5a7a9a}
+    .header-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .channel-link,.update-badge,.pwa-badge{font-size:.7rem;padding:4px 14px;border-radius:40px;border:1px solid rgba(255,215,0,0.04);background:rgba(255,255,255,0.02);color:#8ab4ff;text-decoration:none;transition:.3s;font-weight:400;letter-spacing:.3px}
+    .channel-link:hover{background:rgba(255,215,0,0.04);color:#ffd700}
+    .pwa-badge{background:rgba(255,215,0,0.04);color:#ffd700;border-color:rgba(255,215,0,0.06);cursor:pointer}
+    .update-badge{color:#5a7a9a}
+    .main-tabs,.sub-tabs{display:flex;gap:6px;background:rgba(255,255,255,0.02);padding:5px;border-radius:50px;border:1px solid rgba(255,215,0,0.03);flex-wrap:wrap;margin-bottom:22px}
+    .main-tab,.sub-tab{padding:10px 26px;border-radius:40px;font-weight:700;font-size:.85rem;color:#6a7a9a;background:transparent;border:none;cursor:pointer;transition:all .3s ease;font-family:'Inter',sans-serif;letter-spacing:.3px}
+    .main-tab:hover,.sub-tab:hover{color:#b0c8e8;background:rgba(255,255,255,0.02)}
+    .main-tab.active{background:linear-gradient(135deg,#1a5cff,#0044cc);color:#fff;box-shadow:0 4px 30px rgba(26,92,255,0.12)}
+    .main-tab.immortal-tab.active{background:linear-gradient(135deg,#7c3aed,#a855f7);box-shadow:0 4px 30px rgba(124,58,237,0.12)}
+    .sub-tab{padding:6px 18px;font-weight:500;font-size:.7rem}
+    .sub-tab.active{background:rgba(26,92,255,0.08);color:#8ab4ff;border:1px solid rgba(26,92,255,0.04)}
+    .main-page,.sub-page{display:none;animation:fadeIn .4s ease}
+    .main-page.active,.sub-page.active{display:block}
+    @keyframes fadeIn{0%{opacity:0;transform:translateY(16px)}100%{opacity:1;transform:translateY(0)}}
+    .section-title{font-size:.75rem;color:#5a7a9a;letter-spacing:5px;font-weight:300;text-align:center;margin-bottom:16px;text-transform:uppercase}
+    .section-title::after{content:'';display:block;width:50px;height:2px;background:linear-gradient(90deg,transparent,rgba(255,215,0,0.15),transparent);margin:6px auto 0}
+    .section-divider{border:none;height:1px;background:linear-gradient(90deg,transparent,rgba(255,215,0,0.04),transparent);margin:24px 0}
+    .bracket-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+    @media(max-width:900px){.bracket-grid{grid-template-columns:1fr}}
+    .bracket-card{background:rgba(255,255,255,0.015);border-radius:24px;padding:20px 18px;border:1px solid rgba(255,255,255,0.03);transition:all .3s ease}
+    .bracket-card:hover{border-color:rgba(255,215,0,0.06);transform:translateY(-2px);box-shadow:0 20px 50px rgba(0,0,0,0.1)}
+    .bracket-card.elite{border-top:3px solid #ffd700}
+    .bracket-card.league-tow{border-top:3px solid #1a5cff}
+    .bracket-card.immortal-card{border-top:3px solid #a855f7}
+    .bracket-title{font-family:'Orbitron',sans-serif;font-weight:700;font-size:1.1rem;text-align:center;margin-bottom:14px}
+    .bracket-title.elite{color:#ffd700}
+    .bracket-title.league-tow{color:#1a5cff}
+    .bracket-title.immortal-title{color:#a855f7}
+    .round{margin-bottom:12px}
+    .round-label{font-size:.55rem;color:#4a6a8a;letter-spacing:3px;border-bottom:1px solid rgba(255,255,255,0.02);padding-bottom:3px;text-transform:uppercase;font-weight:400}
+    .match-row{display:flex;justify-content:space-between;align-items:center;padding:5px 12px;background:rgba(0,0,0,0.15);border-radius:10px;margin-bottom:4px;border-left:2px solid rgba(26,92,255,0.06);font-size:.72rem;transition:.2s}
+    .match-row:hover{background:rgba(26,92,255,0.03);border-left-color:rgba(26,92,255,0.12)}
+    .match-row .teams{display:flex;align-items:center;gap:4px;font-weight:500;color:#c8d8e8;font-family:'Orbitron','Inter',sans-serif}
+    .match-row .vs{color:#3a5a7a;font-size:.5rem;font-weight:300}
+    .match-row .status{font-size:.55rem;padding:0 12px;border-radius:20px;white-space:nowrap;font-weight:500}
+    .match-row .status.played{color:#4cdf8b;background:rgba(76,223,139,0.04)}
+    .match-row .status.winner{color:#ffd700;background:rgba(255,215,0,0.06);font-weight:700}
+    .match-row .status.time{color:#4cdf8b;background:rgba(76,223,139,0.08);font-weight:600}
+    .semifinal-connector,.final-connector{text-align:center;color:#2a4a6a;font-size:.55rem;padding:2px 0;letter-spacing:3px}
+    .final-connector{color:#ffd700;font-weight:700}
+    .rankings-wrapper{max-width:1000px;margin:0 auto;overflow-x:auto}
+    .rankings-table,.st-table{width:100%;border-collapse:collapse;font-size:.75rem;background:rgba(255,255,255,0.015);border-radius:16px;overflow:hidden}
+    .rankings-table th,.st-table th{padding:10px 8px;text-align:left;background:rgba(255,215,0,0.03);color:#8a9abb;font-weight:600;font-size:.6rem;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid rgba(255,215,0,0.04)}
+    .rankings-table td,.st-table td{padding:10px 8px;border-bottom:1px solid rgba(255,255,255,0.02);color:#c8d8e8}
+    .rankings-table .pos,.st-table .pos{font-weight:700;color:#7a9abb}
+    .rankings-table .team,.st-table .team{font-weight:500}
+    .rankings-table .pts,.st-table .pts{font-weight:700;color:#ffd700}
+    .gd.positive{color:#4cdf8b}
+    .gd.negative{color:#ff6b6b}
+    .medal{font-size:1rem;margin-right:3px}
+    .num{text-align:center}
+    .stats-wrapper{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:14px}
+    @media(max-width:800px){.stats-wrapper{grid-template-columns:1fr}}
+    .stat-card{background:rgba(255,255,255,0.015);border-radius:20px;padding:18px 20px;border:1px solid rgba(255,255,255,0.03);transition:all .3s ease}
+    .stat-card:hover{border-color:rgba(255,215,0,0.04);transform:translateY(-2px)}
+    .stat-card h3{font-weight:700;font-size:.9rem;color:#e8edf5;margin-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.03);padding-bottom:8px;display:flex;align-items:center;gap:8px}
+    .stat-card h3 .badge{font-size:.45rem;background:rgba(255,215,0,0.04);padding:2px 12px;border-radius:30px;color:#7a9abb;font-weight:400;text-transform:uppercase;letter-spacing:.3px}
+    .stat-list{list-style:none}
+    .stat-list li{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.01);font-size:.78rem}
+    .stat-list li:last-child{border-bottom:none}
+    .stat-list .player{display:flex;gap:6px;align-items:baseline;flex-wrap:wrap}
+    .stat-list .player .name{font-weight:500;color:#c8d8e8;font-family:'Orbitron','Inter',sans-serif}
+    .stat-list .player .club{font-size:.55rem;color:#5a7a9a;background:rgba(255,255,255,0.02);padding:0 10px;border-radius:20px;line-height:1.8;font-family:'Orbitron','Inter',sans-serif}
+    .stat-list .count{font-weight:700;color:#1a5cff;font-size:.9rem;min-width:28px;text-align:right;font-family:'Orbitron',monospace}
+    .stat-list .count.gold{color:#ffd700}
+    .stat-list .rank{color:#2a4a6a;font-weight:300;font-size:.6rem;min-width:20px;font-family:'Orbitron',monospace}
+    .fixtures-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+    .fixture-card{background:rgba(255,255,255,0.015);border-radius:18px;padding:14px 18px;border:1px solid rgba(255,255,255,0.03);transition:.3s}
+    .fixture-card:hover{border-color:rgba(255,215,0,0.04)}
+    .fixture-card .match{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.01);font-size:.74rem}
+    .fixture-card .match:last-child{border-bottom:none}
+    .fixture-card .teams{font-weight:500;color:#c8d8e8;font-family:'Orbitron','Inter',sans-serif}
+    .fixture-card .status{font-size:.6rem;padding:2px 12px;border-radius:20px;white-space:nowrap;color:#ffb347;background:rgba(255,180,70,0.03)}
+    .fixture-card .status.played{color:#4cdf8b;background:rgba(76,223,139,0.03)}
+    .fantasy-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+    .fantasy-card{background:rgba(255,255,255,0.015);border-radius:18px;padding:14px 16px 16px;border:1px solid rgba(255,255,255,0.03);transition:all .3s ease}
+    .fantasy-card:hover{transform:translateY(-3px);border-color:rgba(255,215,0,0.04)}
+    .fantasy-card h4{font-family:'Orbitron',sans-serif;font-weight:700;font-size:.85rem;color:#1a5cff;border-bottom:1px solid rgba(255,255,255,0.03);padding-bottom:6px;margin-bottom:8px;text-align:center;letter-spacing:.3px}
+    .fantasy-card .player-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.01);font-size:.76rem}
+    .fantasy-card .player-row:last-child{border-bottom:none}
+    .fantasy-card .code{font-family:'Orbitron',monospace;font-weight:700;color:#ffd700;background:rgba(255,215,0,0.04);padding:0 12px;border-radius:12px;font-size:.65rem}
+    .fantasy-card .pname{color:#c8d8e8;font-family:'Orbitron','Inter',sans-serif}
+    .news-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:6px}
+    @media(max-width:700px){.news-grid{grid-template-columns:1fr}}
+    .news-card{background:rgba(255,255,255,0.015);border-radius:16px;padding:14px 16px;border:1px solid rgba(255,215,0,0.03);transition:.3s;display:flex;gap:12px;align-items:flex-start}
+    .news-card:hover{border-color:rgba(255,215,0,0.06);transform:translateY(-2px)}
+    .news-card .news-icon{font-size:1.8rem;flex-shrink:0;margin-top:2px}
+    .news-card .news-content .news-title{font-weight:600;font-size:.9rem;color:#e8edf5}
+    .news-card .news-content .news-desc{font-size:.76rem;color:#8a9abb;line-height:1.5}
+    .share-box{background:rgba(255,215,0,0.02);border:1px solid rgba(255,215,0,0.04);border-radius:18px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:6px}
+    .share-box .share-text{font-size:.85rem;color:#8a9abb}
+    .share-box .share-text strong{color:#ffd700}
+    .share-box .share-btn{background:linear-gradient(135deg,#1a5cff,#0044cc);border:none;color:#fff;font-weight:600;padding:6px 22px;border-radius:40px;font-size:.75rem;cursor:pointer;transition:.3s;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:6px}
+    .share-box .share-btn:hover{transform:scale(1.03);box-shadow:0 8px 30px rgba(26,92,255,0.1)}
+    .share-box .share-btn.copied{background:#4cdf8b}
+    .immortal-container{max-width:800px;margin:0 auto;text-align:center}
+    .immortal-container .immortal-icon{font-size:4rem;display:block;margin-bottom:6px;filter:drop-shadow(0 0 40px rgba(160,80,255,0.08));animation:floatIcon 4.5s ease-in-out infinite}
+    @keyframes floatIcon{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-12px) rotate(2deg)}}
+    .immortal-container .immortal-title{font-family:'Orbitron',sans-serif;font-weight:900;font-size:2.2rem;background:linear-gradient(135deg,#a855f7,#d946ef,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-size:200% 200%;animation:shimmerText 4s ease-in-out infinite}
+    @keyframes shimmerText{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+    .immortal-container .immortal-sub{font-size:.95rem;color:#8a7aaa;font-weight:300}
+    .immortal-container .immortal-sub strong{color:#c084fc;font-weight:600}
+    .group-standings-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    @media(max-width:700px){.group-standings-grid{grid-template-columns:1fr}}
+    .group-standings-card{background:rgba(255,255,255,0.015);border-radius:18px;padding:14px 16px;border:1px solid rgba(255,255,255,0.03)}
+    .group-standings-card h4{font-family:'Orbitron',sans-serif;font-weight:700;font-size:.9rem;color:#1a5cff;margin-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.03);padding-bottom:4px;text-align:center;letter-spacing:.5px}
+    .group-standings-card.immortal h4{color:#a855f7}
+    .ko-result{display:flex;justify-content:space-between;align-items:center;padding:6px 16px;background:rgba(0,0,0,0.1);border-radius:12px;margin-bottom:4px;border-left:2px solid rgba(255,215,0,0.06);font-size:.8rem}
+    .ko-result .teams{font-weight:500;color:#c8d8e8;font-family:'Orbitron','Inter',sans-serif}
+    .ko-result .result{font-weight:700;color:#ffd700;background:rgba(255,215,0,0.04);padding:0 14px;border-radius:20px}
+    .sponsor-footer{margin-top:32px;padding-top:16px;border-top:1px solid rgba(255,215,0,0.03);display:flex;justify-content:center}
+    .sponsor-footer .sponsor-box{background:rgba(255,255,255,0.015);border:1px solid rgba(255,215,0,0.03);border-radius:24px;padding:12px 28px;display:flex;align-items:center;gap:20px;backdrop-filter:blur(6px);transition:.3s;width:100%;max-width:640px;justify-content:center;flex-wrap:wrap}
+    .sponsor-footer .sponsor-box:hover{border-color:rgba(255,215,0,0.06);transform:translateY(-2px)}
+    .sponsor-footer .sponsor-box .sponsor-icon{font-size:1.8rem}
+    .sponsor-footer .sponsor-box .sponsor-info .label{font-size:.5rem;color:#4a6a8a;text-transform:uppercase;letter-spacing:3px;font-weight:300}
+    .sponsor-footer .sponsor-box .sponsor-info .name{font-family:'Orbitron',sans-serif;font-weight:700;font-size:1.1rem;color:#e8edf5}
+    .sponsor-footer .sponsor-box .sponsor-info .name span{color:#ffd700}
+    .sponsor-footer .sponsor-box .sponsor-btn{background:linear-gradient(135deg,#1a5cff,#0044cc);border:none;color:#fff;font-weight:600;padding:6px 24px;border-radius:40px;font-size:.72rem;text-decoration:none;transition:.3s;border:1px solid rgba(255,255,255,0.04);font-family:'Inter',sans-serif}
+    .sponsor-footer .sponsor-box .sponsor-btn:hover{transform:scale(1.04);background:linear-gradient(135deg,#3b7aff,#1a5cff)}
+    @media(max-width:768px){body{padding:10px}.container{padding:14px;border-radius:28px}.header{flex-direction:column;align-items:flex-start}.logo h1{font-size:1.6rem}.main-tab{padding:8px 16px;font-size:.75rem}.sub-tab{padding:4px 12px;font-size:.65rem}.bracket-grid,.stats-wrapper,.news-grid{grid-template-columns:1fr}.group-standings-grid{grid-template-columns:1fr}.sponsor-footer .sponsor-box{flex-direction:column;text-align:center;padding:14px 16px}.sponsor-footer .sponsor-box .sponsor-info{align-items:center}.immortal-container .immortal-title{font-size:1.6rem}.share-box{flex-direction:column;text-align:center}}
+    @media(max-width:480px){.main-tabs{border-radius:30px;gap:3px;padding:3px}.main-tab{padding:6px 12px;font-size:.65rem}.sub-tabs{border-radius:20px;gap:2px;padding:3px}.sub-tab{padding:3px 8px;font-size:.55rem}.match-row{font-size:.6rem;flex-wrap:wrap;gap:3px;padding:4px 10px}.immortal-container .immortal-title{font-size:1.2rem}.pwa-badge{font-size:.5rem;padding:2px 10px}}
+  </style>
+</head>
+<body>
+<div class="container">
+      <!-- HEADER -->
+      <header class="header">
+        <div class="logo"><h1>⚡ SUPERLEAGUE</h1><span>SEASON 3 · PREMIER</span></div>
+        <div class="header-actions">
+          <span class="pwa-badge">📱 Install App</span>
+          <a href="https://t.me/TM_Proclubs" target="_blank" class="channel-link">📢 Telegram Channel</a>
+          <span class="update-badge">📅 Jul 7, 2026</span>
+        </div>
+      </header>
+    
+      <!-- MAIN TABS -->
+      <div class="main-tabs" role="tablist">
+        <button class="main-tab active" data-main="superleague">🏆 SUPERLEAGUE</button>
+        <button class="main-tab" data-main="immortal">🏅 IMMORTAL</button>
+        <button class="main-tab" data-main="news">📰 News</button>
+      </div>
+    
+      <!-- SUPERLEAGUE -->
+      <div id="main-superleague" class="main-page active">
+        <div class="sub-tabs" role="tablist">
+          <button class="sub-tab active" data-sub="bracket">🏆 Bracket</button>
+          <button class="sub-tab" data-sub="results">📋 Results</button>
+          <button class="sub-tab" data-sub="fixtures">📅 Fixtures</button>
+          <button class="sub-tab" data-sub="stats">📊 Stats</button>
+          <button class="sub-tab" data-sub="fantasy">🎮 Fantasy</button>
+        </div>
+    
+        <div id="sub-bracket" class="sub-page active">
+          <div class="bracket-grid" id="bracketContainer"></div>
+        </div>
+    
+        <div id="sub-results" class="sub-page">
+          <div class="section-title">📊 Final Group Standings</div>
+          <div class="group-standings-grid" id="groupStandingsContainer"></div>
+          <hr class="section-divider" />
+          <div class="section-title">🏆 Knockout Results</div>
+          <div id="knockoutResultsContainer"></div>
+        </div>
+    
+        <div id="sub-fixtures" class="sub-page">
+          <div class="section-title">📅 Upcoming Fixtures</div>
+          <div class="fixtures-grid" id="fixturesContainer"></div>
+        </div>
+    
+        <div id="sub-stats" class="sub-page">
+          <div class="section-title">📊 Player Statistics</div>
+          <div class="stats-wrapper">
+            <div class="stat-card">
+              <h3>⚽ Top Scorers <span class="badge">Golden Boot</span></h3>
+              <ul class="stat-list" id="scorersList"></ul>
+            </div>
+            <div class="stat-card">
+              <h3>🎯 Top Assists <span class="badge">Playmaker</span></h3>
+              <ul class="stat-list" id="assistsList"></ul>
+            </div>
+          </div>
+        </div>
+    
+        <div id="sub-fantasy" class="sub-page">
+          <div class="section-title">🎮 TM Fantasy Player Codes</div>
+          <p style="color:#5a7a9a;text-align:center;margin-bottom:14px;font-size:.85rem;">
+            Use these codes in <strong style="color:#7a9abb;">@TMproclubbot</strong> (TM Fantasy section).
+          </p>
+          <div class="fantasy-grid" id="fantasyContainer"></div>
+        </div>
+      </div>
+    
+      <!-- IMMORTAL LEAGUE -->
+      <div id="main-immortal" class="main-page">
+        <div class="sub-tabs" role="tablist">
+          <button class="sub-tab active" data-sub="immortal-group">📊 Group Stage</button>
+          <button class="sub-tab" data-sub="immortal-knockout">🏆 Knockout</button>
+        </div>
+    
+        <div id="sub-immortal-group" class="sub-page active">
+          <div class="section-title">📊 IMMORTAL LEAGUE · Group Stage</div>
+          <div class="group-standings-grid" id="immortalGroupContainer"></div>
+        </div>
+    
+        <div id="sub-immortal-knockout" class="sub-page">
+          <div class="section-title">🏆 IMMORTAL LEAGUE · Knockout Stage</div>
+          <div class="bracket-grid" id="immortalBracketContainer"></div>
+        </div>
+      </div>
+    
+      <!-- NEWS -->
+      <div id="main-news" class="main-page">
+        <div class="section-title">📰 Latest News</div>
+        <div class="news-grid" id="newsContainer"></div>
+      </div>
+    
+      <!-- SPONSOR -->
+      <div class="sponsor-footer">
+        <div class="sponsor-box">
+          <span class="sponsor-icon">⚡</span>
+          <div class="sponsor-info">
+            <span class="label">🌟 Official Sponsor</span>
+            <span class="name">Nexa<span>DNS</span></span>
+          </div>
+          <a href="https://t.me/NexaDns" target="_blank" class="sponsor-btn">Visit Sponsor →</a>
+        </div>
+      </div>
+    </div>
+<script>
+      (function(d,t){var BASE_URL="https://app.gapify.ai";var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src=BASE_URL+"/packs/js/sdk.js";g.async=!0;s.parentNode.insertBefore(g,s);g.onload=function(){window.gapifySDK.run({websiteToken:'foRHHnHGsJ5RZWKnwWap3779',baseUrl:BASE_URL})}})(document,"script");
+    </script>
+    
+    <script>
+    // ===== TABS =====
+    var mainTabs=document.querySelectorAll('.main-tab');
+    var mainPages={superleague:document.getElementById('main-superleague'),immortal:document.getElementById('main-immortal'),news:document.getElementById('main-news')};
+    mainTabs.forEach(function(tab){tab.addEventListener('click',function(){var mainId=this.dataset.main;mainTabs.forEach(function(t){t.classList.remove('active')});this.classList.add('active');Object.keys(mainPages).forEach(function(key){mainPages[key].classList.toggle('active',key===mainId)});if(mainId==='superleague'){var firstSubTab=document.querySelector('#main-superleague .sub-tab');var firstSubPage=document.querySelector('#main-superleague .sub-page');if(firstSubTab&&firstSubPage){firstSubTab.classList.add('active');firstSubPage.classList.add('active')}}else{document.querySelectorAll('#main-superleague .sub-tab').forEach(function(st){st.classList.remove('active')});document.querySelectorAll('#main-superleague .sub-page').forEach(function(sp){sp.classList.remove('active')})}})});
+    
+    // SUB TABS
+    var subTabs=document.querySelectorAll('.sub-tab');
+    var subPages={};
+    document.querySelectorAll('.sub-page').forEach(function(sp){if(sp.id)subPages[sp.id.replace('sub-','')]=sp});
+    subTabs.forEach(function(tab){tab.addEventListener('click',function(){var parent=this.closest('.main-page');var subId=this.dataset.sub;parent.querySelectorAll('.sub-tab').forEach(function(t){t.classList.remove('active')});this.classList.add('active');parent.querySelectorAll('.sub-page').forEach(function(sp){sp.classList.toggle('active',sp.id==='sub-'+subId)})})});
+    
+    // ===== DATA =====
+    // TOP SCORERS
+    var topScorers=[{name:'ParsaMadayeni',club:'TVSHOW',goals:17},{name:'Beny',club:'TVSHOW',goals:8},{name:'Parsa',club:'AZABEELAHI',goals:10},{name:'Marcus Rashford',club:'HIERS OP',goals:7},{name:'Parsa',club:'SOROUSH',goals:7},{name:'AP',club:'PERSIANGULF',goals:7},{name:'HosseinArya',club:'VIKINGS',goals:6},{name:'SoSaD',club:'FARID E.',goals:6},{name:'Armanx95',club:'HIERS OP',goals:6},{name:'Sami',club:'HIERS OP',goals:5}];
+    var topAssists=[{name:'Marcus Rashford',club:'HIERS OP',assists:8},{name:'Beny',club:'TVSHOW',assists:5},{name:'Mikh',club:'TVSHOW',assists:2},{name:'Parsa',club:'SOROUSH',assists:6},{name:'F MCH',club:'VIKINGS',assists:5},{name:'Hamed',club:'VIKINGS',assists:5},{name:'Parham',club:'HIERS OP',assists:5},{name:'ParsaMadayeni',club:'TVSHOW',assists:5}];
+    
+    // SUPERLEAGUE BRACKET
+    var bracketData={ELITE:{label:'ELITE',color:'#ffd700',quarterfinals:[{home:'MadridTvShow',away:'Azabe Elahi FC',result:'MadridTvShow',note:'✅'},{home:'Titans',away:'DaryaSalar',result:'DaryaSalar',note:'✅'},{home:'HiersOfPersia',away:'PersianGulf',result:'PersianGulf',note:'✅'},{home:'FaridEftekharDoost',away:'Vikings',result:'FaridEftekharDoost',note:'✅'}],semifinals:[{home:'MadridTvShow',away:'DaryaSalar',result:'MadridTvShow',note:'✅'},{home:'PersianGulf',away:'FaridEftekharDoost',result:null,time:'12:00 AM'}],final:[{home:'MadridTvShow',away:'Winner SF2',result:null}]},'LEAGUE TOW':{label:'LEAGUE TOW',color:'#1a5cff',quarterfinals:[{home:'ITA',away:'Richmond',result:'ITA',note:'✅'},{home:'Soroush FC',away:'Galaxy F35',result:'Soroush FC',note:'✅'},{home:'RoyalMadrid',away:'KakaSiah',result:'RoyalMadrid',note:'✅'},{home:'Salmandan',away:'Tehran Legacy',result:'Salmandan',note:'✅'}],semifinals:[{home:'ITA',away:'Soroush FC',result:'ITA',note:'✅'},{home:'RoyalMadrid',away:'Salmandan',result:'Salmandan',note:'✅'}],final:[{home:'ITA',away:'Salmandan',result:null}]}};
+    
+    // IMMORTAL BRACKET - کامل با مرحله گروهی و حذفی
+    var immortalGroupData={A:[{name:'Prostar',P:5,W:4,D:0,L:1,GD:19,PTS:12},{name:'Algoorg',P:5,W:4,D:0,L:1,GD:6,PTS:12},{name:'Richmond',P:5,W:3,D:0,L:2,GD:-1,PTS:9},{name:'Bank Mellat',P:5,W:2,D:2,L:1,GD:-2,PTS:8},{name:'Hakhamanesh',P:5,W:0,D:2,L:3,GD:-11,PTS:2},{name:'Bedehkaran',P:5,W:0,D:0,L:5,GD:-16,PTS:0}],B:[{name:'Titans',P:5,W:4,D:1,L:0,GD:8,PTS:13},{name:'Azadi',P:5,W:3,D:2,L:0,GD:11,PTS:11},{name:'Aftabe Sazi',P:5,W:2,D:1,L:2,GD:2,PTS:7},{name:'Chagho Sazi',P:5,W:1,D:0,L:4,GD:-3,PTS:3},{name:'Falcons',P:5,W:1,D:0,L:4,GD:-4,PTS:3},{name:'Barca Nova',P:5,W:0,D:0,L:5,GD:-14,PTS:0}],C:[{name:'Warriors',P:5,W:4,D:1,L:0,GD:21,PTS:13},{name:'Vikings',P:5,W:4,D:0,L:1,GD:17,PTS:12},{name:'Made In God',P:5,W:3,D:1,L:1,GD:12,PTS:10},{name:'Captain FC',P:5,W:1,D:1,L:3,GD:1,PTS:4},{name:'Bilmaz',P:5,W:1,D:1,L:3,GD:-8,PTS:4},{name:'Dalghak UTD',P:5,W:0,D:0,L:5,GD:-43,PTS:0}],D:[{name:'Heirs of Persia',P:5,W:5,D:0,L:0,GD:17,PTS:15},{name:'RMP FC',P:5,W:4,D:0,L:1,GD:13,PTS:12},{name:'Catalan Devils',P:5,W:3,D:0,L:2,GD:7,PTS:9},{name:'Persian Knight',P:5,W:2,D:0,L:3,GD:0,PTS:6},{name:'Galaxy F35',P:5,W:0,D:0,L:5,GD:-27,PTS:0},{name:'Tehran CF',P:5,W:0,D:0,L:5,GD:-15,PTS:0}]};
+    
+    // IMMORTAL KNOCKOUT - Round of 16, Quarterfinals, Semifinals, Final
+    var immortalKnockoutData={
+      round16:[
+        {home:'Prostar',away:'Captain FC'},{home:'Titans',away:'Persian Knight'},
+        {home:'Warriors',away:'Chagho Sazi'},{home:'Heirs of Persia',away:'Bank Mellat'},
+        {home:'Algoorg',away:'Catalan Devils'},{home:'Azadi',away:'Made In God'},
+        {home:'Vikings',away:'Richmond'},{home:'RMP FC',away:'Aftabe Sazi'}
+      ],
+      quarterfinals:[
+        {home:'Winner R16-1',away:'Winner R16-2'},{home:'Winner R16-3',away:'Winner R16-4'},
+        {home:'Winner R16-5',away:'Winner R16-6'},{home:'Winner R16-7',away:'Winner R16-8'}
+      ],
+      semifinals:[
+        {home:'Winner QF-1',away:'Winner QF-2'},{home:'Winner QF-3',away:'Winner QF-4'}
+      ],
+      final:[
+        {home:'Winner SF-1',away:'Winner SF-2'}
+      ]
+    };
+    
+    var knockoutMatches=[];
+    
+    // FIXTURES
+    var fixturesByDay=[{day:'🏆 ELITE — Semifinal',matches:[{home:'PersianGulf',away:'FaridEftekharDoost',time:'12:00 AM'}]},{day:'🏅 LEAGUE TOW — Final',matches:[{home:'ITA',away:'Salmandan',time:'TBD'}]},{day:'🏆 ELITE — Final',matches:[{home:'MadridTvShow',away:'Winner SF2',time:'TBD'}]}];
+    
+    // FANTASY
+    var fantasyData=[{team:'AZABEELAHI',players:[{code:'G01',name:'ARVIN BZF'},{code:'MD 01',name:'Mobin'},{code:'MD 02',name:'Bisc1t'},{code:'A 01',name:'ParsaXbio'},{code:'A 02',name:'AlirezaDr'}]},{team:'TVSHOW',players:[{code:'G02',name:'DEXTER'},{code:'MD 03',name:'MIKH'},{code:'MD 04',name:'Reverse'},{code:'A 03',name:'ParsaMadayeni'},{code:'A 04',name:'Sa1rosh'}]},{team:'TITANS',players:[{code:'G03',name:'Arman'},{code:'MD 05',name:'Farzad'},{code:'MD 06',name:'S. HARDANI'},{code:'A 05',name:'ZIGILINHO'},{code:'A 06',name:'ANDI'}]},{team:'DARYASALAR',players:[{code:'G04',name:'Aboli'},{code:'MD 07',name:'Abol'},{code:'MD 08',name:'Zanboori'},{code:'A 07',name:'GORCC'},{code:'A 08',name:'ArvinMc'}]},{team:'FARID E.',players:[{code:'G05',name:'FAR'},{code:'MD 09',name:'Heidari'},{code:'MD 10',name:'Rjb'},{code:'A 09',name:'SOSAD'},{code:'A 10',name:'ASAP'}]},{team:'VIKINGS',players:[{code:'G06',name:'A. BZF'},{code:'MD 11',name:'Hamm'},{code:'MD 12',name:'M FCH'},{code:'A 11',name:'HossienArya'},{code:'A 12',name:'Milad'}]},{team:'PERSIANGULF',players:[{code:'G07',name:'Sadeghi'},{code:'MD 13',name:'KosDast'},{code:'MD 14',name:'Ramtin'},{code:'A 13',name:'C. RONALDO'},{code:'A 14',name:'AP'}]},{team:'HIERS OP',players:[{code:'G08',name:'Neuer'},{code:'MD 15',name:'XxShojaxX'},{code:'MD 16',name:'m. asli'},{code:'A 15',name:'Marcus Rashford'},{code:'A 16',name:'Sami'}]}];
+    
+    // NEWS
+    var newsData=[{icon:'🏆',title:'MadridTvShow to ELITE Final!',desc:'MadridTvShow awaits winner of PersianGulf vs FaridEftekharDoost (12:00 AM).'},{icon:'⚡',title:'ITA vs Salmandan in LEAGUE TOW Final',desc:'Both teams advanced to the final.'},{icon:'🎯',title:'ParsaMadayeni Leads Goals',desc:'17 goals this season, leading the race.'},{icon:'📊',title:'Beny & Mikh Shine',desc:'Beny: 8G 5A | Mikh: 2A'},{icon:'🔥',title:'IMMORTAL Knockout Starts!',desc:'Round of 16 begins with Prostar vs Captain FC and more exciting matches.'}];
+    
+    // ===== RENDER FUNCTIONS =====
+    function getKnockoutResult(home,away){for(var i=0;i<knockoutMatches.length;i++){var m=knockoutMatches[i];if((m.home===home&&m.away===away)||(m.home===away&&m.away===home)){if(m.home===home&&m.away===away)return m.score;else{var parts=m.score.split('-');return parts[1]+'-'+parts[0]}}}return null}
+    
+    function renderBracket(){var container=document.getElementById('bracketContainer');container.innerHTML='';for(var league in bracketData){if(bracketData.hasOwnProperty(league)){var data=bracketData[league];var card=document.createElement('div');card.className='bracket-card '+(league==='ELITE'?'elite':'league-tow');var title=document.createElement('div');title.className='bracket-title '+(league==='ELITE'?'elite':'league-tow');title.textContent=league;card.appendChild(title);var rounds=[{key:'quarterfinals',label:'⚔️ Quarterfinals'},{key:'semifinals',label:'🏆 Semifinals'},{key:'final',label:'👑 Final'}];for(var r=0;r<rounds.length;r++){var roundKey=rounds[r].key;var roundLabel=rounds[r].label;var matches=data[roundKey];if(!matches)continue;var div=document.createElement('div');div.className='round';var label=document.createElement('div');label.className='round-label';label.textContent=roundLabel;div.appendChild(label);for(var i=0;i<matches.length;i++){var m=matches[i];var row=document.createElement('div');row.className='match-row';var homeName=m.home;var awayName=m.away;if(m.result){if(m.result===m.home)homeName='<span class="winner">'+m.home+'</span>';else if(m.result===m.away)awayName='<span class="winner">'+m.away+'</span>'}var statusHtml='';if(m.note){statusHtml='<span class="status winner">'+m.note+' Advanced</span>'}else if(m.time){statusHtml='<span class="status time">⏰ '+m.time+'</span>'}else{var result=getKnockoutResult(m.home,m.away);statusHtml=result?'<span class="status played">'+result+'</span>':'<span class="status">⏳ TBD</span>'}row.innerHTML='<span class="teams"><span>'+homeName+'</span> <span class="vs">vs</span> <span>'+awayName+'</span></span>'+statusHtml;div.appendChild(row)}card.appendChild(div);if(roundKey==='quarterfinals'&&data.semifinals){var connector=document.createElement('div');connector.className='semifinal-connector';connector.textContent='⬇ ⬇ ⬇';card.appendChild(connector)}if(roundKey==='semifinals'&&data.final){var connector2=document.createElement('div');connector2.className='final-connector';connector2.textContent='🏆 FINAL 🏆';card.appendChild(connector2)}}container.appendChild(card)}}}
+    
+    function renderImmortalGroup(){var container=document.getElementById('immortalGroupContainer');container.innerHTML='';for(var group in immortalGroupData){if(immortalGroupData.hasOwnProperty(group)){var data=immortalGroupData[group];var card=document.createElement('div');card.className='group-standings-card immortal';var html='<h4>GROUP '+group+'</h4>';html+='<table class="st-table"><thead><tr><th>#</th><th>Team</th><th class="num">P</th><th class="num">W</th><th class="num">D</th><th class="num">L</th><th class="num">GD</th><th class="num">PTS</th></tr></thead><tbody>';for(var i=0;i<data.length;i++){var t=data[i];var gdClass=t.GD>0?'positive':(t.GD<0?'negative':'');html+='<tr><td class="pos">'+(i+1)+'</td><td class="team">'+t.name+'</td><td class="num">'+t.P+'</td><td class="num">'+t.W+'</td><td class="num">'+t.D+'</td><td class="num">'+t.L+'</td><td class="num gd '+gdClass+'">'+(t.GD>0?'+':'')+t.GD+'</td><td class="pts">'+t.PTS+'</td></tr>'}html+='</tbody></table>';card.innerHTML=html;container.appendChild(card)}}}
+    
+    function renderImmortalBracket(){var container=document.getElementById('immortalBracketContainer');container.innerHTML='';var card=document.createElement('div');card.className='bracket-card immortal-card';var title=document.createElement('div');title.className='bracket-title immortal-title';title.textContent='🏆 IMMORTAL KNOCKOUT';card.appendChild(title);var rounds=[{key:'round16',label:'⚔️ Round of 16'},{key:'quarterfinals',label:'🏆 Quarterfinals'},{key:'semifinals',label:'🔥 Semifinals'},{key:'final',label:'👑 FINAL'}];for(var r=0;r<rounds.length;r++){var roundKey=rounds[r].key;var roundLabel=rounds[r].label;var matches=immortalKnockoutData[roundKey];if(!matches)continue;var div=document.createElement('div');div.className='round';var label=document.createElement('div');label.className='round-label';label.textContent=roundLabel;div.appendChild(label);for(var i=0;i<matches.length;i++){var m=matches[i];var row=document.createElement('div');row.className='match-row';var homeName=m.home;var awayName=m.away;if(m.result){if(m.result===m.home)homeName='<span class="winner">'+m.home+'</span>';else if(m.result===m.away)awayName='<span class="winner">'+m.away+'</span>'}var statusHtml='';if(m.note){statusHtml='<span class="status winner">'+m.note+' Advanced</span>'}else if(m.time){statusHtml='<span class="status time">⏰ '+m.time+'</span>'}else{var result=getKnockoutResult(m.home,m.away);statusHtml=result?'<span class="status played">'+result+'</span>':'<span class="status">⏳ TBD</span>'}row.innerHTML='<span class="teams"><span>'+homeName+'</span> <span class="vs">vs</span> <span>'+awayName+'</span></span>'+statusHtml;div.appendChild(row)}card.appendChild(div);if(roundKey!=='final'){var connector=document.createElement('div');connector.className='semifinal-connector';connector.textContent='⬇ ⬇ ⬇';card.appendChild(connector)}}container.appendChild(card)}
+    
+    function renderTopScorers(){var list=document.getElementById('scorersList');list.innerHTML='';var sorted=topScorers.slice().sort(function(a,b){return b.goals-a.goals});for(var i=0;i<sorted.length&&i<10;i++){var item=sorted[i];var li=document.createElement('li');var isGold=(i===0);li.innerHTML='<span class="player"><span class="rank">#'+(i+1)+'</span><span class="name">'+item.name+'</span><span class="club">'+item.club+'</span></span><span class="count '+(isGold?'gold':'')+'">'+item.goals+'</span>';list.appendChild(li)}}
+    function renderTopAssists(){var list=document.getElementById('assistsList');list.innerHTML='';var sorted=topAssists.slice().sort(function(a,b){return b.assists-a.assists});for(var i=0;i<sorted.length&&i<10;i++){var item=sorted[i];var li=document.createElement('li');var isGold=(i===0);li.innerHTML='<span class="player"><span class="rank">#'+(i+1)+'</span><span class="name">'+item.name+'</span><span class="club">'+item.club+'</span></span><span class="count '+(isGold?'gold':'')+'">'+item.assists+'</span>';list.appendChild(li)}}
+    function renderFixtures(){var container=document.getElementById('fixturesContainer');container.innerHTML='';var hasMatch=false;for(var d=0;d<fixturesByDay.length;d++){var dayData=fixturesByDay[d];var matches=dayData.matches;if(matches.length===0)continue;var card=document.createElement('div');card.className='fixture-card';var html='<div style="border-bottom:1px solid rgba(255,215,0,0.03);padding-bottom:5px;margin-bottom:7px;"><h3 style="font-weight:700;font-size:0.85rem;color:#1a5cff;font-family:Orbitron, Inter, sans-serif;">📅 '+dayData.day+'</h3></div>';for(var mIdx=0;mIdx<matches.length;mIdx++){var match=matches[mIdx];var result=getKnockoutResult(match.home,match.away);var statusHtml=result?'<span class="status played">'+result+'</span>':'<span class="status">'+match.time+'</span>';html+='<div class="match"><span class="teams">'+match.home+' vs '+match.away+'</span>'+statusHtml+'</div>';hasMatch=true}card.innerHTML=html;container.appendChild(card)}if(!hasMatch){container.innerHTML='<div class="fixture-card" style="text-align:center; color:#5a7a9a;">No fixtures available.</div>'}}
+    function renderFantasy(){var container=document.getElementById('fantasyContainer');container.innerHTML='';for(var i=0;i<fantasyData.length;i++){var team=fantasyData[i];var card=document.createElement('div');card.className='fantasy-card';var title=document.createElement('h4');title.textContent=team.team;card.appendChild(title);for(var j=0;j<team.players.length;j++){var p=team.players[j];var row=document.createElement('div');row.className='player-row';var nameSpan=document.createElement('span');nameSpan.className='pname';nameSpan.textContent=p.name;var codeSpan=document.createElement('span');codeSpan.className='code';codeSpan.textContent=p.code;row.appendChild(nameSpan);row.appendChild(codeSpan);card.appendChild(row)}container.appendChild(card)}}
+    function renderNews(){var container=document.getElementById('newsContainer');container.innerHTML='';newsData.forEach(function(news){var card=document.createElement('div');card.className='news-card';card.innerHTML='<span class="news-icon">'+news.icon+'</span><div class="news-content"><div class="news-title">'+news.title+'</div><div class="news-desc">'+news.desc+'</div></div>';container.appendChild(card)})}
+    
+    // ===== PWA & SHARE =====
+    document.getElementById('shareBtn')&&document.getElementById('shareBtn').addEventListener('click',function(){var link=window.location.href;if(navigator.clipboard){navigator.clipboard.writeText(link).then(function(){var btn=document.getElementById('shareBtn');btn.innerHTML='✅ Copied!';btn.classList.add('copied');setTimeout(function(){btn.innerHTML='📤 Share Link';btn.classList.remove('copied')},2500)}).catch(function(){prompt('Copy this link:',link)})}else{prompt('Copy this link:',link)}});
+    var pwaBadge=document.querySelector('.pwa-badge');pwaBadge&&pwaBadge.addEventListener('click',function(){if(window.navigator&&window.navigator.standalone){alert('✅ Already installed as PWA!');return}if(window.matchMedia('(display-mode: standalone)').matches){alert('✅ Already installed as PWA!');return}if(window.deferredPrompt){window.deferredPrompt.prompt();window.deferredPrompt.userChoice.then(function(choiceResult){if(choiceResult.outcome==='accepted'){console.log('User accepted the PWA install')}else{console.log('User dismissed the PWA install')}window.deferredPrompt=null})}else{alert('📱 To install this app:\n\n1. Chrome: Tap the menu (⋮) → "Add to Home screen"\n2. Safari: Tap Share → "Add to Home Screen"\n3. Firefox: Tap menu → "Add to Home screen"')}});window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.deferredPrompt=e;var pwaBadge2=document.querySelector('.pwa-badge');if(pwaBadge2){pwaBadge2.style.display='inline-flex';pwaBadge2.innerHTML='📲 Install Now';pwaBadge2.style.background='rgba(76,223,139,0.1)';pwaBadge2.style.color='#4cdf8b';pwaBadge2.style.borderColor='rgba(76,223,139,0.2)';pwaBadge2.style.cursor='pointer'}});
+    
+    // ===== INIT =====
+    renderBracket();renderImmortalGroup();renderImmortalBracket();renderTopScorers();renderTopAssists();renderFixtures();renderFantasy();renderNews();console.log('✅ SUPERLEAGUE + IMMORTAL loaded!');
+    </script>
+    </body>
+    </html>
